@@ -23,7 +23,7 @@ export default function App({}){
         </Tab.Navigator>   
       </NavigationContainer>
       <MemberPage info="">
-          <Text>Hello from app.js</Text>
+          <Text>Hello from Lambda</Text>
       </MemberPage>
     </View>
   );
