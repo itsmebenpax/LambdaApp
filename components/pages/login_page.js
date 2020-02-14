@@ -1,11 +1,20 @@
-import React, { Component } from 'react'
+import * as React from 'react';
+import { StyleSheet,Text, View, Button } from 'react-native'
 
-export default class login_page extends Component {
-    render() {
+import Member_page from './member_page'
+
+export default function login_page({navigation}) {
         return (
-            <div>
-                
-            </div>
+            <View style={styles.texxtt}>
+                <Text>Login</Text>
+            </View>
         )
     }
-}
+
+    const styles = StyleSheet.create({
+        texxtt:{
+            flex:1,
+            alignItems: 'center',
+            justifyContent: 'center',
+        }
+    });

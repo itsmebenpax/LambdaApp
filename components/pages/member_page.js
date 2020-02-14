@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
-import { StyleSheet,Text, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet,Text, View, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default class member_page extends Component {
-    render() {
+export default function member_page({navigation}) {
         return (
             <View style={styles.page}>
                 <View style={styles.Avatar}>
                     <Text>BP</Text>
                 </View>
                 <Text> Benjamin </Text>
-                <Text></Text>
+                <Button title="Login" onPress={() => navigation.navigate('Login')} />
             </View>
         )
     }
-}
+
 
 const styles = StyleSheet.create({
     page:{
