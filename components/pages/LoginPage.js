@@ -1,39 +1,35 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
-
-const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        width: 250,
-        borderColor: 'gray',
-        borderWidth: 1
-    }
-});
+import {Input} from 'react-native-elements';
 
 export default class LoginPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {text: ''};
-    }
-
-    onChangeText = (text) => {
-        
     }
 
     render() {
         return (
-            <View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Mail eller medlemsnummer"
-                    onChangeText={text => this.setState({text})}
-                    value={this.state.text}
+            <View width="80%" height="100%" style={styles.container}>
+                <Input
+                    placeholder='Medlemsnummer'
+                    containerStyle={styles.input}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder=""
+                <Input
+                    placeholder='Adgangskode'
+                    containerStyle={styles.input}
                 />
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    input: {
+        padding: 10
+    },
+
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+});
