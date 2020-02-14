@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet,Text, View } from 'react-native';
 
-export default class member_page extends Component {
+export default class MemberPage extends Component {
     render() {
         return (
             <View style={styles.page}>

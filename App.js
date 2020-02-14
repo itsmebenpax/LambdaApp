@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Member_page from './components/pages/member_page'
+import MemberPage from './components/pages/MemberPage'
 
 export default function App() {
   return (
-    <Member_page info="">
+    <MemberPage info="">
         <Text>Hello from app.js</Text>
-    </Member_page>
+    </MemberPage>
   );
 }
 
