@@ -9,20 +9,23 @@ export default class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            medlemsnummer: "",
-            adgangskode: ""
+            membershipNumber: '',
+            password: ''
         }
+        this.handleInputChangeMembershipNumber = this.handleInputChangeMembershipNumber.bind(this);
+        this.handleInputChangePassword = this.handleInputChangePassword.bind(this);
     }
 
-    handleInputChange = (key) => (event) => {
-        console.log(event)
-        console.log(key)
-        console.log(event.nativeEvent.text)
-        console.log(this.state.medlemsnummer)
+    handleInputChangeMembershipNumber = (value) => {
         this.setState({
-            [key]: event.nativeEvent.text
-        })
-        this.props.onChange(event)
+            membershipNumber: value
+        });
+    }
+
+    handleInputChangePassword = (value) => {
+        this.setState({
+            password: value
+        });
     }
 
     render() {
@@ -39,17 +42,20 @@ export default class LoginPage extends Component {
                         style={styles.logo}
                     />
                     <TextInput
-                        name='medlemsnummer'
+                        name='membershipNumber'
+                        value={this.state.membershipNumber}
                         placeholder='Medlemsnummer'
                         style={[styles.theme, styles.input]}
-                        onChange={this.handleInputChange('medlemsnummer')}
+                        onChangeText={this.handleInputChangeMembershipNumber}
                         autoCompleteType='username'
                     />
                     <TextInput
-                        name='adgangskode'
+                        name='password'
+                        value={this.state.password}
                         placeholder='Adgangskode'
                         style={[styles.theme, styles.input]}
                         secureTextEntry={true}
+                        onChangeText={this.handleInputChangePassword}
                         autoCompleteType='password'
                     />
                     <TouchableOpacity
