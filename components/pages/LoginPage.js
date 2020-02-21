@@ -59,7 +59,23 @@ export default class LoginPage extends Component {
                     >
                         <Text style={styles.text}> LOGIN </Text>
                     </TouchableOpacity>
-                    <Text style={styles.smallText}>Opret en bruger her</Text>
+                    <Text style={styles.smallText}>Har du ikke en bruger? <Text style={{textDecorationLine: 'underline'}}>Opret en her</Text></Text>
+
+                    <Text style={[styles.smallText, {marginTop: 80}]}>Login med Sociale Netværk</Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                                                
+                    }}>
+                        <Image
+                            source={require('../../assets/fb-logo.png')}
+                            style={styles.socialmedialogo}
+                        />
+                        <Image
+                            source={require('../../assets/twitter-logo.png')}
+                            style={[styles.socialmedialogo, {width: 58, height: 58, marginRight: 20}]}
+                        />
+                    </View>
                 </View>
             </ImageBackground>
         )
@@ -108,7 +124,8 @@ const styles = StyleSheet.create({
     smallText: {
         color: 'white',
         fontFamily: 'Avenir',
-        opacity: 0.7
+        opacity: 0.9,
+        fontSize: 16
     },
 
     container: {
@@ -124,10 +141,16 @@ const styles = StyleSheet.create({
 
     logo: {
         resizeMode: 'contain',
-        marginVertical: 80,
-        marginTop: 50,
+        marginBottom: 110,
         padding: 35,
         marginRight: 20,
-        width: '100%'
+        width: '100%',
+        height: "auto"
+    },
+
+    socialmedialogo: {
+        resizeMode: 'stretch',
+        width: 100,
+        height: 100
     }
 });
