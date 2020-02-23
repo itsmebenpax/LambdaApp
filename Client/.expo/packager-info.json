@@ -1,9 +1,9 @@
 {
   "webpackServerPort": null,
   "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://5c-p2k.anonymous.client.exp.direct",
+  "packagerNgrokUrl": "https://packager.5c-p2k.anonymous.client.exp.direct",
+  "ngrokPid": 50545,
   "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null
