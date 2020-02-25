@@ -10,10 +10,13 @@ export default class LoginPage extends Component {
         super(props);
         this.state = {
             membershipNumber: '',
-            password: ''
+            password: '',
+            falseMembershipNumber: false,
+            falsePassword: false
         }
         this.handleInputChangeMembershipNumber = this.handleInputChangeMembershipNumber.bind(this);
         this.handleInputChangePassword = this.handleInputChangePassword.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChangeMembershipNumber = (value) => {
@@ -26,6 +29,20 @@ export default class LoginPage extends Component {
         this.setState({
             password: value
         });
+    }
+
+    handleSubmit = () => {
+        // check user name
+        
+        if (this.state.membershipNumber !== login.getUserName()) {
+            this.setState({
+                falseMembershipNumber: true
+            })
+        } else if (this.state.password !== login.getPassword()) {
+            this.setState({})
+        }
+
+        console.log(login.getUserName());
     }
 
     render() {
@@ -62,6 +79,7 @@ export default class LoginPage extends Component {
                         title='Login'
                         type='outline'
                         style={[styles.theme, styles.button]}
+                        onPress={this.handleSubmit}
                     >
                         <Text style={styles.text}> LOGIN </Text>
                     </TouchableOpacity>
