@@ -1,4 +1,4 @@
-node_modules/**/*
+.node_modules/**/*
 .expo/*
 npm-debug.*
 *.jks
@@ -7,6 +7,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
+*.gz
 web-build/
 web-report/
 

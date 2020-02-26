@@ -1,21 +1,31 @@
-import * as React from 'react';
+import React, { Component } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
-
-import LoginPage from './components/pages/LoginPage';
+//import of screens
+import HomePage from './components/pages/HomePage';
 import MemberPage from './components/pages/MemberPage'
+import LoginPage from './components/pages/LoginPage'
 
+const Navigation = createDrawerNavigator();
 
-
-
-
-export default function App({}){
-  return(
-    <View style={styles.container}>
-      <MemberPage />
-    </View>
-  );
+export default class App extends Component{
+  render(){
+    return(
+        <NavigationContainer>
+          <Navigation.Navigator drawerStyle={{backgroundColor:'gray',}} drawerType='front' initialRouteName='Home' drawerPosition='right'>
+            <Navigation.Screen name='Home' component={HomePage} />
+            <Navigation.Screen name='Mamber page' component={MemberPage} />
+            <Navigation.Screen name='Login' component={LoginPage} />
+          </Navigation.Navigator>
+        </NavigationContainer>
+    );
+  }
 }
+
+
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
