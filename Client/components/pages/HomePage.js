@@ -1,7 +1,5 @@
-import React, {Component} from 'react'
-import { Text, View, Button } from 'react-native'
-import { DraweActions, useNavigation } from '@react-navigation/native'
-
+import React, {Component} from 'react';
+import { Text, View, Button } from 'react-native';
 
 export default class HomePage extends Component {
     render() {
