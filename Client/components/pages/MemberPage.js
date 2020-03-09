@@ -14,10 +14,10 @@ export default class MemberPage extends Component {
         }
         
     }
-    componentDidMount(){
+    /*componentWillMount(){
         var res = Axios.get('http://localhost:9000/api');
         console.log(res)
-    }
+    }*/
 
     getUser = async () => {
         var user = await Axios.get('http://localhost:9000/api')

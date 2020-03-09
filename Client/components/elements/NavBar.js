@@ -7,10 +7,9 @@ export default class NavBar extends Component{
         const {navigation} = this.props;
         return (
             <View style={styles.navbar}>
-                <Text> textInComponent </Text>
                 <Button
                 title="open drawer"
-                onPress={() => navigation.openDrawer()} />
+                onPress={() => navigation.toggleDrawer()} />
             </View>
         )
     }
