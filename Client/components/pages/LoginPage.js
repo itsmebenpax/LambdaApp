@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Image} from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Image, Platform} from 'react-native'
 import {Input, withTheme} from 'react-native-elements';
+//import CookieManager from 'react-native-cookies';
 
-// fake backend import
-import login from '../../fake-backend/LoginInformation'
+import userServices from './../../Services/userServices';
 
 export default class LoginPage extends Component {
     constructor(props) {
@@ -27,8 +27,42 @@ export default class LoginPage extends Component {
             password: value
         });
     }
-
-    
+    onLogin = async () => {
+        if (this.state.membershipNumber.length >= 1 && this.state.password.length >= 1)
+        {
+            let data ={
+                userName: this.state.membershipNumber,
+                password: this.state.password
+            }
+            console.log("hello" ,data)
+            let AT = await userServices.login(data);
+            console.log('AT', AT)
+                if(AT.status !== 200)
+                {
+                    alert('User not found')
+                } else {
+                //Platform.select
+                /*CookieManager.set({
+                    name: 'user',
+                    value: AT.userName,
+                    domain: 'some domain',
+                    origin: 'some origin',
+                    path: '/',
+                    version: '1',})
+                this.setState({membershipNumber:"", password:""})*/
+                localStorage.setItem('user', AT.data.userName);
+                alert('User found! Current user is: ' + AT.data.firstName +" "+ AT.data.lastName)
+            }
+        }   
+        else {
+            console.log("error msg")
+            alert('Enten medlems nummeret eller passwordet er forkert')
+        }
+    }
+    getUser = async () => {
+        let users = await userServices.getusers();
+        console.log(users);
+    }
     render() {
         return (
             <ImageBackground
@@ -63,6 +97,7 @@ export default class LoginPage extends Component {
                         title='Login'
                         type='outline'
                         style={[styles.theme, styles.button]}
+                        onPress={this.onLogin}
                     >
                         <Text style={styles.text}> LOGIN </Text>
                     </TouchableOpacity>
