@@ -1,10 +1,10 @@
 {
   "webpackServerPort": null,
-  "expoServerPort": null,
-  "expoServerNgrokUrl": "https://5c-p2k.anonymous.client.exp.direct",
-  "packagerNgrokUrl": "https://packager.5c-p2k.anonymous.client.exp.direct",
-  "ngrokPid": 58387,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://qy-sty.anonymous.client.exp.direct",
+  "packagerNgrokUrl": "https://packager.qy-sty.anonymous.client.exp.direct",
+  "ngrokPid": 1452,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null
+  "packagerPort": 19001,
+  "packagerPid": 1433
 }

@@ -19,12 +19,17 @@ class LoginInformation {
         var user = users.find(users => users.name === data);
         return user;
     }
-    getUserName() {
-        return 'ben';
+
+    checkCredentials(memberShipNumber, password) {
+        if (this.loginValid(memberShipNumber, password)) {
+            console.log("Du er nu logget ind.")
+        } else {
+            console.log("Login fejlede.")
+        }
     }
 
-    getPassword() {
-        return 'hemmeligt';
+    loginValid(memberShipNumber, password) {
+        return memberShipNumber === "851995" && password === "hemmeligt";
     }
 }
 

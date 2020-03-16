@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Image} from 'react-native'
 import {Input, withTheme} from 'react-native-elements';
 
+//import { REACT_APP_AWS_API_KEY } from 'react-native-dotenv'
+
 // fake backend import
 import login from '../../fake-backend/LoginInformation'
 
@@ -12,6 +14,7 @@ export default class LoginPage extends Component {
             membershipNumber: '',
             password: ''
         }
+        
         this.handleInputChangeMembershipNumber = this.handleInputChangeMembershipNumber.bind(this);
         this.handleInputChangePassword = this.handleInputChangePassword.bind(this);
     }
@@ -28,6 +31,17 @@ export default class LoginPage extends Component {
         });
     }
 
+    handleSubmit = () => {
+        console.log()
+        // axios({
+        //     method: 'post',
+        //     url: 'https://pwbyyj81d6.execute-api.us-east-1.amazonaws.com/default/validateLogin',
+        //     data: {
+        //         "membership_number": this.state.membershipNumber,
+        //         "password": this.state.password
+        //     }
+        // })
+    }
     
     render() {
         return (
@@ -63,6 +77,7 @@ export default class LoginPage extends Component {
                         title='Login'
                         type='outline'
                         style={[styles.theme, styles.button]}
+                        onPress={this.handleSubmit}
                     >
                         <Text style={styles.text}> LOGIN </Text>
                     </TouchableOpacity>
