@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 
 const app = express()
@@ -45,9 +46,13 @@ app.post('/api/user/login', async (req, res) => {
     else{
         console.log('server faild')
         return res.status(404).send('User not found!')}
-    });
+});
+
+app.get('/api/user/tester', async (req, res) => {
+    const result = process.env.AWS_KEY;
+    return res.send(result);
+})
 
 
-//require('./routes/userRoute')(app);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
