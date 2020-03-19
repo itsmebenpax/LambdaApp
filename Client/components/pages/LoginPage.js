@@ -35,7 +35,7 @@ export default class LoginPage extends Component {
                 password: this.state.password
             }
             console.log("hello" ,data)
-            let AT = await userServices.login(data);
+            let AT = await userServices.tester();
             console.log('AT', AT)
                 if(AT.status !== 200)
                 {
