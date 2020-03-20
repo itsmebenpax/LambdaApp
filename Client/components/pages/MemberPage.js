@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet,Text, View, Button, TextInput } from 'react-native';
 
 import Backend from '../../fake-backend/LoginInformation'
+import Axios from 'axios';
 
 export default class MemberPage extends Component {
     constructor(props) {
@@ -13,17 +14,15 @@ export default class MemberPage extends Component {
         }
         
     }
-    
+    /*componentWillMount(){
+        var res = Axios.get('http://localhost:9000/api');
+        console.log(res)
+    }*/
 
-    getUser = () => {
-        var user = Backend.getUser(this.state.name);
-        this.setState({
-            name: user.name,
-            memberShipNumber: user.memberShipNumber,
-            expireDate: user.expireDate,
-        });
-        console.log(this.state);
-        console.log(user)
+    getUser = async () => {
+        var user = await Axios.get('http://localhost:9000/api')
+        this.setState({expireDate: user.data})
+        console.log("member", user.data)
     }
 
     render() {

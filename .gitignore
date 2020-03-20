@@ -1,5 +1,7 @@
+
 Client/.node_modules/*
 .expo/*
+Client/.expo/*
 npm-debug.*
 *.jks
 *.p8
@@ -13,3 +15,4 @@ web-report/
 
 # macOS
 .DS_Store
+node_modules

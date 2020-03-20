@@ -7,13 +7,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomePage from './components/pages/HomePage';
 import MemberPage from './components/pages/MemberPage'
 import LoginPage from './components/pages/LoginPage'
+import NavBar from './components/elements/NavBar'
+import { Header } from 'react-native-elements';
 
 const Navigation = createDrawerNavigator();
+
+function toggleDrawer({navigation}) {
+  return(
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={()=>navigation.toggleDrawer()} title="Go back home" />
+    </View>
+  )
+}
 
 export default class App extends Component{
   render(){
     return(
         <NavigationContainer>
+          <Header 
+            rightComponent={{icon: 'menu', color: '#fff'}}
+            />
           <Navigation.Navigator drawerStyle={{backgroundColor:'gray',}} drawerType='front' initialRouteName='Home' drawerPosition='right'>
             <Navigation.Screen name='Home' component={HomePage} />
             <Navigation.Screen name='Mamber page' component={MemberPage} />
@@ -31,4 +44,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  navbar: {
+    justifyContent: 'center',
+    alignItems:'center',
+    height: "10%",
+    backgroundColor: "#00d822"
+}
 });
