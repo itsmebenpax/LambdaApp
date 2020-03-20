@@ -14,6 +14,7 @@ export default{
     },
 
     tester: async() => {
+        console.log('service')
         let res = await axios.get('http://localhost:9000/api/user/tester');
         console.log(res);
         return res;

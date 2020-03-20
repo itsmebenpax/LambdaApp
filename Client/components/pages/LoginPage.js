@@ -41,16 +41,6 @@ export default class LoginPage extends Component {
                 {
                     alert('User not found')
                 } else {
-                //Platform.select
-                /*CookieManager.set({
-                    name: 'user',
-                    value: AT.userName,
-                    domain: 'some domain',
-                    origin: 'some origin',
-                    path: '/',
-                    version: '1',})
-                this.setState({membershipNumber:"", password:""})*/
-                localStorage.setItem('user', AT.data.userName);
                 alert('User found! Current user is: ' + AT.data.firstName +" "+ AT.data.lastName)
             }
         }   

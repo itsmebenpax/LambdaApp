@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const axios = require('axios')
 require('dotenv').config();
 
 
@@ -49,7 +50,8 @@ app.post('/api/user/login', async (req, res) => {
 });
 
 app.get('/api/user/tester', async (req, res) => {
-    const result = process.env.AWS_KEY;
+    const result = await axios.get(process.env.AWS_ENDPOINT, {headers: {'x-api-key': process.env.AWS_KEY}});
+    console.log(result);
     return res.send(result);
 })
 
