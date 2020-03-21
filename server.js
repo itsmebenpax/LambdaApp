@@ -55,6 +55,12 @@ app.get('/api/user/tester', async (req, res) => {
     return res.send(result);
 })
 
+app.post('/api/user/createUser', async (req, res) => {
+    console.log('backend ',req.body)
+    const user = req.body;
+    return res.send('worked') 
+})
+
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

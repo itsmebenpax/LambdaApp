@@ -8,6 +8,10 @@ import HomePage from './components/pages/HomePage';
 import MemberPage from './components/pages/MemberPage'
 import LoginPage from './components/pages/LoginPage'
 import CreateLoginPage from './components/pages/CreateLoginPage'
+import MemberPage from './components/pages/MemberPage';
+import LoginPage from './components/pages/LoginPage';
+import CreatePage from './components/pages/CreatePage';
+import { Header } from 'react-native-elements';
 
 import { connect } from 'react-redux';
 import { login } from './actions/login'
