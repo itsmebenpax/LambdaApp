@@ -5,20 +5,12 @@ import { NavigationContainer } from '@react-navigation/native';
 
 //import of screens
 import HomePage from './components/pages/HomePage';
-import MemberPage from './components/pages/MemberPage'
-import LoginPage from './components/pages/LoginPage'
-import NavBar from './components/elements/NavBar'
+import MemberPage from './components/pages/MemberPage';
+import LoginPage from './components/pages/LoginPage';
+import CreatePage from './components/pages/CreatePage';
 import { Header } from 'react-native-elements';
 
 const Navigation = createDrawerNavigator();
-
-function toggleDrawer({navigation}) {
-  return(
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={()=>navigation.toggleDrawer()} title="Go back home" />
-    </View>
-  )
-}
 
 export default class App extends Component{
   render(){
@@ -31,6 +23,7 @@ export default class App extends Component{
             <Navigation.Screen name='Home' component={HomePage} />
             <Navigation.Screen name='Mamber page' component={MemberPage} />
             <Navigation.Screen name='Login' component={LoginPage} />
+            <Navigation.Screen name='Create user' component={CreatePage} />
           </Navigation.Navigator>
         </NavigationContainer>
     );

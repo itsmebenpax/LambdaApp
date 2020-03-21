@@ -12,6 +12,13 @@ export default{
         return res;
 
     },
+    createUser: async (data) => {
+        console.log('Before ',data)
+        let res = await axios.post('http://localhost:9000/api/user/createUser', data);
+        console.log('After ' ,data);
+        console.log('REspons: ',res.status);
+        return res.status;
+    },
 
     tester: async() => {
         console.log('service')

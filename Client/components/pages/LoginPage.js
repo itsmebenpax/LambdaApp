@@ -49,10 +49,6 @@ export default class LoginPage extends Component {
             alert('Enten medlems nummeret eller passwordet er forkert')
         }
     }
-    getUser = async () => {
-        let users = await userServices.getusers();
-        console.log(users);
-    }
     render() {
         return (
             <ImageBackground
@@ -71,7 +67,7 @@ export default class LoginPage extends Component {
                         value={this.state.membershipNumber}
                         placeholder='Medlemsnummer'
                         style={[styles.theme, styles.input]}
-                        onChangeText={this.handleInputChangeMembershipNumber}
+                        onChangeText={(membershipNumber) => this.setState({membershipNumber})}
                         autoCompleteType='username'
                     />
                     <TextInput
@@ -80,7 +76,7 @@ export default class LoginPage extends Component {
                         placeholder='Adgangskode'
                         style={[styles.theme, styles.input]}
                         secureTextEntry={true}
-                        onChangeText={this.handleInputChangePassword}
+                        onChangeText={(password) => this.setState({password})}
                         autoCompleteType='password'
                     />
                     <TouchableOpacity
