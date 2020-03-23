@@ -23,6 +23,7 @@
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-bcrypt": "^2.4.0",
     "react-native-cookies": "^3.3.0",
     "react-native-elements": "^1.2.7",
     "react-native-fbsdk": "^1.1.2",
