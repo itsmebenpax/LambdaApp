@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { createSwitchNavigator } from 'react-navigation'
 
 //import of screens
 import HomePage from './components/pages/HomePage';
 import MemberPage from './components/pages/MemberPage'
 import LoginPage from './components/pages/LoginPage'
-import NavBar from './components/elements/NavBar'
+import CreateLoginPage from './components/pages/CreateLoginPage'
 import { Header } from 'react-native-elements';
 
 const Navigation = createDrawerNavigator();
@@ -21,23 +21,19 @@ function toggleDrawer({navigation}) {
 }
 
 export default class App extends Component{
-  render(){
+  render() {
     return(
-        <NavigationContainer>
-          <Header 
-            rightComponent={{icon: 'menu', color: '#fff'}}
-            />
-          <Navigation.Navigator drawerStyle={{backgroundColor:'gray',}} drawerType='front' initialRouteName='Home' drawerPosition='right'>
-            <Navigation.Screen name='Home' component={HomePage} />
-            <Navigation.Screen name='Mamber page' component={MemberPage} />
-            <Navigation.Screen name='Login' component={LoginPage} />
-          </Navigation.Navigator>
-        </NavigationContainer>
+      <AppSwitchNavigator />
     );
   }
 }
 
-
+const AppSwitchNavigator = createSwitchNavigator ({
+  Login: LoginPage,
+  Register: CreateLoginPage,
+  Home: HomePage,
+  MemberCard: MemberPage
+})
 
 const styles = StyleSheet.create({
   container: {
