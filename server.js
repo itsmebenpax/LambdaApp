@@ -49,18 +49,21 @@ app.post('/api/user/login', async (req, res) => {
         return res.status(404).send('User not found!')}
 });
 
-app.get('/api/user/tester', async (req, res) => {
-    const result = await axios.get(process.env.AWS_ENDPOINT, {headers: {'x-api-key': process.env.AWS_KEY}});
-    console.log(result);
-    return res.send(result);
-})
 
 app.post('/api/user/createUser', async (req, res) => {
-    console.log('backend ',req.body)
-    const user = req.body;
-    return res.send('worked') 
+    const user = {
+        user_id: req.body.user_id,
+        email: req.body.email,
+        membership_number: req.body.membership_number,
+        password_hash: req.body.password
+    }
+    console.log(user);
+    try {
+        const result = await axios.post(process.env.AWS_ENDPOINT+'createUser', {headers: {'x-api-key': process.env.AWS_KEY}}, user);
+        return res.send(result.status) 
+    } catch (error) {
+        return res.send('shit broke ', error)
+    }
 })
-
-
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

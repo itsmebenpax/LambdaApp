@@ -21,12 +21,28 @@ export default class SignupFrom extends Component {
             reaped_password:''
         }
     }
+
+    
+
     onCreate = async () => {
         if(this.state.reaped_password != this.state.password)
         {
             alert('Adgangskoden skal være ens!')
         } else {
-            let data = this.state;
+            let data = {
+                membership_number: this.state.membership_number,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                address: this.state.address,
+                city: this.state.city,
+                postel_code: this.state.postel_code,
+                phone_number: this.state.phone_number,
+                birthday: this.state.birthday,
+                gender: this.state.gender,
+                password: this.state.password,
+                user_id: Math.floor(Math.random() * 1000).toString()
+            }
             console.log('Signup: ',data)
             userServices.createUser(data)
             
@@ -107,7 +123,7 @@ export default class SignupFrom extends Component {
                     placeholder='Fødselsdag'
                     style={[styles.theme, styles.input]}
                     onChangeText={(birthday) => this.setState({birthday})}
-                    autoCompleteType='data'
+                    autoCompleteType='off'
                 />
                 <TextInput
                     name='gender'

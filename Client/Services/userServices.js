@@ -1,4 +1,5 @@
 import axios from 'axios';
+import bcrypt from 'react-native-bcrypt';
 
 export default{
     getusers: async() => {
@@ -13,17 +14,8 @@ export default{
 
     },
     createUser: async (data) => {
-        console.log('Before ',data)
+        data.password = await bcrypt.hashSync(data.password, 10);
         let res = await axios.post('http://localhost:9000/api/user/createUser', data);
-        console.log('After ' ,data);
-        console.log('REspons: ',res.status);
         return res.status;
     },
-
-    tester: async() => {
-        console.log('service')
-        let res = await axios.get('http://localhost:9000/api/user/tester');
-        console.log(res);
-        return res;
-    }
 }
