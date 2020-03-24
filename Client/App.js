@@ -1,39 +1,59 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Button } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createSwitchNavigator } from 'react-navigation'
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //import of screens
 import HomePage from './components/pages/HomePage';
 import MemberPage from './components/pages/MemberPage'
 import LoginPage from './components/pages/LoginPage'
 import CreateLoginPage from './components/pages/CreateLoginPage'
-import { Header } from 'react-native-elements';
 
-const Navigation = createDrawerNavigator();
+//let isRegisterMembership = false;
 
-function toggleDrawer({navigation}) {
-  return(
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={()=>navigation.toggleDrawer()} title="Go back home" />
+function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <HomePage/>
     </View>
   )
 }
 
+function MemberScreen() {
+  return (
+    <View style={styles.container}>
+      <MemberPage/>
+    </View>
+  )
+}
+
+const TabNavigator = createBottomTabNavigator();
+let isLoggedIn = false;
+let isRegisteringUser = false;
+
 export default class App extends Component{
   render() {
     return(
-      <AppSwitchNavigator />
+      <View>
+        {isLoggedIn ? 
+          (
+            <NavigationContainer>
+              <TabNavigator.Navigator>
+                <TabNavigator.Screen name="Forside" component={HomeScreen}/>
+                <TabNavigator.Screen name="Medlemskort" component={MemberScreen}/>
+              </TabNavigator.Navigator>
+            </NavigationContainer>
+          ) : isRegisteringUser ? 
+            (
+              <CreateLoginPage/>
+            ) : (
+              <HomePage/>
+            )
+        }
+      </View>
     );
   }
 }
-
-const AppSwitchNavigator = createSwitchNavigator ({
-  Login: LoginPage,
-  Register: CreateLoginPage,
-  Home: HomePage,
-  MemberCard: MemberPage
-})
 
 const styles = StyleSheet.create({
   container: {

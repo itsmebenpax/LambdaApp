@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Image, Platform} from 'react-native'
 import {Input, withTheme} from 'react-native-elements';
 //import CookieManager from 'react-native-cookies';
-import { createSwitchNavigator } from 'react-navigation'
 
 import userServices from './../../Services/userServices';
 
