@@ -22,7 +22,12 @@ export default class SignupFrom extends Component {
         }
     }
 
-    
+    onGet = async () => {
+        let data = {membership_number: this.state.membership_number};
+        console.log('onGet: ', data)
+        const user = await userServices.getUserWithID(data);
+        //console.log("User: ",user);
+    }
 
     onCreate = async () => {
         if(this.state.reaped_password != this.state.password)
@@ -155,7 +160,7 @@ export default class SignupFrom extends Component {
                     title='Create'
                     type='outline'
                     style={[styles.theme, styles.button]}
-                    onPress={this.onCreate}>
+                    onPress={this.onGet}>
                     <Text style={styles.text}> Opret bruger </Text>
                 </TouchableOpacity>
             </View>
