@@ -24,9 +24,9 @@ export default class SignupFrom extends Component {
 
     onGet = async () => {
         let data = {membership_number: this.state.membership_number};
-        console.log('onGet: ', data)
         const user = await userServices.getUserWithID(data);
-        //console.log("User: ",user);
+        alert("User with MN: " + user.membership_number + " and email: " + user.email + " was found")
+        
     }
 
     onCreate = async () => {
@@ -48,8 +48,9 @@ export default class SignupFrom extends Component {
                 password: this.state.password,
                 user_id: Math.floor(Math.random() * 1000).toString()
             }
-            console.log('Signup: ',data)
-            userServices.createUser(data)
+            const res = await userServices.createUser(data);
+            if(res === 200)
+            alert("User have been created!");
             
         }
         
@@ -160,7 +161,7 @@ export default class SignupFrom extends Component {
                     title='Create'
                     type='outline'
                     style={[styles.theme, styles.button]}
-                    onPress={this.onGet}>
+                    onPress={this.onCreate}>
                     <Text style={styles.text}> Opret bruger </Text>
                 </TouchableOpacity>
             </View>
