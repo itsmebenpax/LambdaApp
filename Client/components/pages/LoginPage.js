@@ -53,6 +53,11 @@ export default class LoginPage extends Component {
         let users = await userServices.getusers();
         console.log(users);
     }
+
+    handleSubmit = () => {
+        this.props.navigation.navigate('MemberCard')
+    }
+
     render() {
         return (
             <ImageBackground
@@ -87,7 +92,7 @@ export default class LoginPage extends Component {
                         title='Login'
                         type='outline'
                         style={[styles.theme, styles.button]}
-                        onPress={this.onLogin}
+                        onPress={this.handleSubmit}
                     >
                         <Text style={styles.text}> LOGIN </Text>
                     </TouchableOpacity>
