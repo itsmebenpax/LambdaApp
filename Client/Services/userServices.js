@@ -12,8 +12,8 @@ export default{
     },
 
     login: async (data) => {
+        console.log("login services", data)
         let res = await axios.post('http://localhost:9000/api/user/login',data);
-        console.log(res)
         return res;
 
     },

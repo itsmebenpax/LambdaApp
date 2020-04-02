@@ -15,19 +15,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let usersList =[{
-    firstName: "Morten",
-    lastName: "Skovgaard",
-    userName: "MSJ",
-    password: "12345"
-},
-{
-    firstName: "Benjamin",
-    lastName: "Perbst",
-    userName: "Benja",
-    password: "password"
-}]
-
 app.get('/api/user/getUser', async (req,res) => {
     console.log(req)
     const user = await axios.get(process.env.AWS_ENDPOINT+'getUser', {headers: {'x-api-key': process.env.AWS_KEY}})
@@ -54,7 +41,6 @@ app.post('/api/user/createUser', async (req, res) => {
     try {
         console.log("User object: ",user)
         const result = await axios.post(process.env.AWS_ENDPOINT+'createUser', user, {headers: {'x-api-key': process.env.AWS_KEY}});
-        console.log("result: ",result.status)
         return res.send(result.status) 
     } catch (error) {
         return res.status("Error")
@@ -62,8 +48,13 @@ app.post('/api/user/createUser', async (req, res) => {
 });
 
 app.post('/api/user/login', async (req, res) => {
-    console.log(req.body)
-    const user = usersList.find(({userName}) => userName === req.body.userName)
+    console.log("login server",req.body)
+    try {
+        const user = await axios.post(process.env.AWS_ENDPOINT+'validateLogin', req.body) 
+    } catch (error) {
+        
+    }
+    
     if(user !== undefined){
         if(user.password === req.body.password)
         {
