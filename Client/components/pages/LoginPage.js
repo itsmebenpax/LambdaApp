@@ -12,30 +12,15 @@ export default class LoginPage extends Component {
             membershipNumber: '',
             password: ''
         }
-        this.handleInputChangeMembershipNumber = this.handleInputChangeMembershipNumber.bind(this);
-        this.handleInputChangePassword = this.handleInputChangePassword.bind(this);
     }
 
-    handleInputChangeMembershipNumber = (value) => {
-        this.setState({
-            membershipNumber: value
-        });
-    }
-
-    handleInputChangePassword = (value) => {
-        this.setState({
-            password: value
-        });
-    }
+    
     onLogin = async () => {
         if (this.state.membershipNumber.length >= 1 && this.state.password.length >= 1)
         {
-            let data ={
-                userName: this.state.membershipNumber,
-                password: this.state.password
-            }
+            let data = this.state;
             console.log("hello" ,data)
-            let AT = await userServices.tester();
+            let AT = await userServices.login(data);
             console.log('AT', AT)
                 if(AT.status !== 200)
                 {
