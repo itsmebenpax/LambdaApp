@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -9,7 +9,24 @@ import MemberPage from './components/pages/MemberPage'
 import LoginPage from './components/pages/LoginPage'
 import CreateLoginPage from './components/pages/CreateLoginPage'
 
-//let isRegisterMembership = false;
+import { connect } from 'react-redux';
+import { login } from './actions/login'
+import { bindActionCreators } from 'redux'
+
+import { AppRegistry } from 'react-native';
+import { name as appName } from './app.json';
+import { Provider } from 'react-redux';
+
+const RNRedux = () => (
+  <Provider store = { store }>
+    <App/>
+  </Provider>
+)
+
+AppRegistry.registerComponent(appName, () => RNRedux)
+
+import configureStore from './store/configureStore'
+const store = configureStore()
 
 function HomeScreen() {
   return (
@@ -28,13 +45,14 @@ function MemberScreen() {
 }
 
 const TabNavigator = createBottomTabNavigator();
-let isLoggedIn = false;
+//let isLoggedIn = false;
 let isRegisteringUser = false;
 
-export default class App extends Component{
+class App extends Component{
   render() {
+    const { isLoggedIn } = this.props;
     return(
-      <View>
+      <Provider store={store}>
         {isLoggedIn ? 
           (
             <NavigationContainer>
@@ -47,10 +65,11 @@ export default class App extends Component{
             (
               <CreateLoginPage/>
             ) : (
-              <HomePage/>
+              <LoginPage/>
             )
         }
-      </View>
+
+      </Provider>
     );
   }
 }
@@ -65,5 +84,20 @@ const styles = StyleSheet.create({
     alignItems:'center',
     height: "10%",
     backgroundColor: "#00d822"
-}
+  }
 });
+
+const mapStateToProps = state => ({
+  count: state.count
+})
+
+const ActionCreators = Object.assign(
+  {},
+  login
+)
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(ActionCreators, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet,Text, View, Button, TextInput } from 'react-native';
 
-import Backend from '../../fake-backend/LoginInformation'
 import Axios from 'axios';
 
 export default class MemberPage extends Component {
