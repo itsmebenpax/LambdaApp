@@ -1,14 +1,13 @@
 import React from 'react'
-import { TextInput } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 
 import GeneralTheme from '../../../styles/GeneralTheme'
 
-const ThemeTextInput = (props) => {
-    const name = props.name === undefined ? "" : props.name
-    const placeholder = props.placeholder === undefined ? "" : props.placeholder
+const ThemeButton = (props) => {
+    const title = props.title === undefined ? "" : props.title
+    const text = props.text === undefined ? "" : props.text
     const style = props.style === undefined ? {} : props.style
-    const secureTextEntry = props.type === "password" ? true : false
-    const type = props.type === undefined ? "" : props.type
+    const type = props.type === undefined ? "outline" : props.type
 
     const margin = props.margin === undefined ? 0 : props.margin
 
@@ -20,15 +19,12 @@ const ThemeTextInput = (props) => {
     const marginLeft = props.marginLeft === undefined ? 0 : props.marginLeft
     const marginRight = props.marginRight === undefined ? 0 : props.marginRight
 
-    const themeColor = props.themeColor === undefined ? 'white' : props.themeColor
+    const themeColor = props.themeColor === undefined ? '#7a450c' : props.themeColor
 
     return (
-        <TextInput
-            name={name}
-            placeholder={placeholder}
-            secureTextEntry={secureTextEntry}
-            autoCompleteType={type}
-
+        <TouchableOpacity
+            title={title}
+            type={type}
             style={[GeneralTheme.theme, {
                 margin: margin,
                 marginVertical: marginVertical,
@@ -39,10 +35,13 @@ const ThemeTextInput = (props) => {
                 marginRight: marginHorizontal === 0 ? marginRight : marginRight !== 0 ? marginRight : marginHorizontal,
                 backgroundColor: themeColor,
                 borderColor: themeColor,
-                shadowColor: themeColor
+                shadowColor: themeColor,
             }, style]}
-        />
+        >
+            <Text style={GeneralTheme.text}> {text} </Text>
+        </TouchableOpacity>
     )
+ 
 }
 
-export default ThemeTextInput
+export default ThemeButton
