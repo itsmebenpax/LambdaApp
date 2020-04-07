@@ -21,10 +21,13 @@ const ThemeButton = (props) => {
 
     const themeColor = props.themeColor === undefined ? '#7a450c' : props.themeColor
 
+    const onPressMethod = props.onPressMethod
+
     return (
         <TouchableOpacity
             title={title}
             type={type}
+            onPress={() => onPressMethod()}
             style={[GeneralTheme.theme, {
                 margin: margin,
                 marginVertical: marginVertical,

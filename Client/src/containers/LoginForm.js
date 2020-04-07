@@ -1,13 +1,58 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
+import {connect} from 'react-redux'
+import {login} from '../actions'
+
 import FacebookLogo from '../components/elements/logos/FacebookLogo'
 import TwitterLogo from '../components/elements/logos/TwitterLogo'
 import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput'
 import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 import GeneralTheme from '../styles/GeneralTheme'
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
+    constructor(props) {
+        super(props)
+
+        login.bind(this)
+    }
+
+    state = {
+        user: '',
+        password: ''
+    }
+
+    login = (user, password) => {
+        // redux store
+        this.props.dispatch(login(user, password))
+        console.log(this.state.user)
+        this.setState({
+            user: '',
+            password: ''
+        })
+    }
+
+    setUserState = (input) => {
+        this.setState({
+            user: input
+        })
+    }
+
+    setPasswordState = (input) => {
+        this.setState({
+            password: input
+        })
+    }
+
+    login = () => {
+        this.props.dispatch(login(this.state.user, this.state.password))
+        this.setState({
+            user: '',
+            password: ''
+        })
+        console.log(this.state.user)
+    }
+
     render() {
         return (
             <View style={[styles.container, {width: this.props.width}]}>
@@ -15,6 +60,7 @@ export default class LoginForm extends Component {
                     marginVertical={10}
                     type={'username'}
                     name={'user'}
+                    callbackMethod={this.setUserState}
                     placeholder={'Medlemsnummer eller e-mail'}
                 />
 
@@ -22,6 +68,7 @@ export default class LoginForm extends Component {
                     marginVertical={10}
                     type={'password'}
                     name={'password'}
+                    callbackMethod={this.setPasswordState}
                     placeholder={'Adgangskode'}
                 />
 
@@ -29,6 +76,7 @@ export default class LoginForm extends Component {
                     marginTop={40}
                     marginBottom={15}
                     text={'LOGIN'}
+                    onPressMethod={this.login}
                 />
 
                 <Text style={GeneralTheme.smallText}>Har du ikke en bruger? <Text style={{textDecorationLine: 'underline'}}>Opret en her</Text></Text>
@@ -55,3 +103,5 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 })
+
+export default connect()(LoginForm)
