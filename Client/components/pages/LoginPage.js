@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Image, Platform} from 'react-native'
 import {Input, withTheme} from 'react-native-elements';
 //import CookieManager from 'react-native-cookies';
+import { createSwitchNavigator } from 'react-navigation'
 
 import userServices from './../../Services/userServices';
 
@@ -68,7 +69,7 @@ export default class LoginPage extends Component {
                         title='Login'
                         type='outline'
                         style={[styles.theme, styles.button]}
-                        onPress={this.onLogin}
+                        onPress={this.handleSubmit}
                     >
                         <Text style={styles.text}> LOGIN </Text>
                     </TouchableOpacity>

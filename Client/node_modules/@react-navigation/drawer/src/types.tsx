@@ -7,6 +7,7 @@ import {
   Descriptor,
   NavigationHelpers,
   DrawerNavigationState,
+  DrawerActionHelpers,
 } from '@react-navigation/native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 
@@ -26,8 +27,9 @@ export type DrawerNavigationConfig<T = DrawerContentOptions> = {
    * - `front`: Traditional drawer which covers the screen with a overlay behind it.
    * - `back`: The drawer is revealed behind the screen on swipe.
    * - `slide`: Both the screen and the drawer slide on swipe to reveal the drawer.
+   * - `permanent`: A permanent drawer is shown as a sidebar.
    */
-  drawerType?: 'front' | 'back' | 'slide';
+  drawerType?: 'front' | 'back' | 'slide' | 'permanent';
   /**
    * How far from the edge of the screen the swipe gesture should activate.
    */
@@ -109,9 +111,18 @@ export type DrawerNavigationOptions = {
 
   /**
    * Whether you can use gestures to open or close the drawer.
+   * Setting this to `false` disables swipe gestures as well as tap on overlay to close.
+   * See `swipeEnabled` to disable only the swipe gesture.
    * Defaults to `true`
    */
   gestureEnabled?: boolean;
+
+  /**
+   * Whether you can use swipe gestures to open or close the drawer.
+   * Defaults to `true`
+   */
+  swipeEnabled?: boolean;
+
   /**
    * Whether this screen should be unmounted when navigating away from it.
    * Defaults to `false`.
@@ -190,22 +201,8 @@ export type DrawerNavigationProp<
   DrawerNavigationState,
   DrawerNavigationOptions,
   DrawerNavigationEventMap
-> & {
-  /**
-   * Open the drawer sidebar.
-   */
-  openDrawer(): void;
-
-  /**
-   * Close the drawer sidebar.
-   */
-  closeDrawer(): void;
-
-  /**
-   * Open the drawer sidebar if closed, or close if opened.
-   */
-  toggleDrawer(): void;
-};
+> &
+  DrawerActionHelpers<ParamList>;
 
 export type DrawerDescriptor = Descriptor<
   ParamListBase,

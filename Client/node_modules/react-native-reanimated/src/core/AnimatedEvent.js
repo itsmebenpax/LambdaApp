@@ -60,7 +60,9 @@ function sanitizeArgMapping(argMapping) {
       set: function(target, prop, value) {
         if (prop === '__val') {
           target[prop] = value;
+          return true;
         }
+        return false;
       },
     };
 
@@ -80,16 +82,10 @@ export default class AnimatedEvent extends AnimatedNode {
     const { eventMappings, alwaysNodes } = sanitizeArgMapping(argMapping);
     super({ type: 'event', argMapping: eventMappings });
     this._alwaysNodes = alwaysNodes;
-    if (Platform.OS === 'web') {
-      this._argMapping = eventMappings;
-      this.__getHandler = () => {
-        return ({ nativeEvent }) => {
-          for (const [key, value] of this._argMapping) {
-            if (key in nativeEvent) value.setValue(nativeEvent[key]);
-          }
-        };
-      };
-    }
+  }
+
+  toString() {
+    return `AnimatedEvent, id: ${this.__nodeID}`;
   }
 
   // The below field is a temporary workaround to make AnimatedEvent object be recognized

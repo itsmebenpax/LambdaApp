@@ -42,7 +42,8 @@ it('converts state to path string with config', () => {
     Baz: {
       path: 'baz/:author',
       parse: {
-        author: (author: string) => author.replace(/^\w/, c => c.toUpperCase()),
+        author: (author: string) =>
+          author.replace(/^\w/, (c) => c.toUpperCase()),
         id: (id: string) => Number(id.replace(/^x/, '')),
         valid: Boolean,
       },
@@ -128,7 +129,8 @@ it('handles state with config with nested screens', () => {
     Baz: {
       path: 'baz/:author',
       parse: {
-        author: (author: string) => author.replace(/^\w/, c => c.toUpperCase()),
+        author: (author: string) =>
+          author.replace(/^\w/, (c) => c.toUpperCase()),
         count: Number,
         valid: Boolean,
       },
@@ -192,12 +194,14 @@ it('handles state with config with nested screens and unused configs', () => {
     Baz: {
       path: 'baz/:author',
       parse: {
-        author: (author: string) => author.replace(/^\w/, c => c.toUpperCase()),
+        author: (author: string) =>
+          author.replace(/^\w/, (c) => c.toUpperCase()),
         count: Number,
         valid: Boolean,
       },
       stringify: {
-        author: (author: string) => author.replace(/^\w/, c => c.toLowerCase()),
+        author: (author: string) =>
+          author.replace(/^\w/, (c) => c.toLowerCase()),
         unknown: (_: unknown) => 'x',
       },
     },
@@ -255,11 +259,11 @@ it('handles nested object with stringify in it', () => {
           path: 'bis/:author',
           stringify: {
             author: (author: string) =>
-              author.replace(/^\w/, c => c.toLowerCase()),
+              author.replace(/^\w/, (c) => c.toLowerCase()),
           },
           parse: {
             author: (author: string) =>
-              author.replace(/^\w/, c => c.toUpperCase()),
+              author.replace(/^\w/, (c) => c.toUpperCase()),
             count: Number,
             valid: Boolean,
           },
@@ -516,4 +520,210 @@ it('returns "/" for empty path', () => {
   };
 
   expect(getPathFromState(state, config)).toBe('/');
+});
+
+it('parses no path specified', () => {
+  const path = '/Foo/bar';
+  const config = {
+    Foo: {
+      screens: {
+        Foe: {},
+      },
+    },
+    Bar: 'bar',
+  };
+
+  const state = {
+    routes: [
+      {
+        name: 'Foo',
+        state: {
+          routes: [{ name: 'Bar' }],
+        },
+      },
+    ],
+  };
+
+  expect(getPathFromState(state, config)).toBe(path);
+  expect(getPathFromState(getStateFromPath(path, config), config)).toBe(path);
+});
+
+it('parses no path specified in nested config', () => {
+  const path = '/Foo/Foe/bar';
+  const config = {
+    Foo: {
+      path: 'foo',
+      screens: {
+        Foe: {},
+      },
+    },
+    Bar: 'bar',
+  };
+
+  const state = {
+    routes: [
+      {
+        name: 'Foo',
+        state: {
+          routes: [
+            {
+              name: 'Foe',
+              state: {
+                routes: [{ name: 'Bar' }],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
+  expect(getPathFromState(state, config)).toBe(path);
+  expect(getPathFromState(getStateFromPath(path, config), config)).toBe(path);
+});
+
+it('strips undefined query params', () => {
+  const path = '/bar/sweet/apple/foo/bis/jane?count=10&valid=true';
+  const config = {
+    Foo: {
+      path: 'foo',
+      screens: {
+        Foe: {
+          path: 'foe',
+        },
+      },
+    },
+    Bar: 'bar/:type/:fruit',
+    Baz: {
+      path: 'baz',
+      screens: {
+        Bos: 'bos',
+        Bis: {
+          path: 'bis/:author',
+          stringify: {
+            author: (author: string) =>
+              author.replace(/^\w/, (c) => c.toLowerCase()),
+          },
+          parse: {
+            author: (author: string) =>
+              author.replace(/^\w/, (c) => c.toUpperCase()),
+            count: Number,
+            valid: Boolean,
+          },
+        },
+      },
+    },
+  };
+
+  const state = {
+    routes: [
+      {
+        name: 'Bar',
+        params: { fruit: 'apple', type: 'sweet' },
+        state: {
+          routes: [
+            {
+              name: 'Foo',
+              state: {
+                routes: [
+                  {
+                    name: 'Baz',
+                    state: {
+                      routes: [
+                        {
+                          name: 'Bis',
+                          params: {
+                            author: 'Jane',
+                            count: 10,
+                            answer: undefined,
+                            valid: true,
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
+  expect(getPathFromState(state, config)).toBe(path);
+  expect(getPathFromState(getStateFromPath(path, config), config)).toBe(path);
+});
+
+it('handles stripping all query params', () => {
+  const path = '/bar/sweet/apple/foo/bis/jane';
+  const config = {
+    Foo: {
+      path: 'foo',
+      screens: {
+        Foe: {
+          path: 'foe',
+        },
+      },
+    },
+    Bar: 'bar/:type/:fruit',
+    Baz: {
+      path: 'baz',
+      screens: {
+        Bos: 'bos',
+        Bis: {
+          path: 'bis/:author',
+          stringify: {
+            author: (author: string) =>
+              author.replace(/^\w/, (c) => c.toLowerCase()),
+          },
+          parse: {
+            author: (author: string) =>
+              author.replace(/^\w/, (c) => c.toUpperCase()),
+            count: Number,
+            valid: Boolean,
+          },
+        },
+      },
+    },
+  };
+
+  const state = {
+    routes: [
+      {
+        name: 'Bar',
+        params: { fruit: 'apple', type: 'sweet' },
+        state: {
+          routes: [
+            {
+              name: 'Foo',
+              state: {
+                routes: [
+                  {
+                    name: 'Baz',
+                    state: {
+                      routes: [
+                        {
+                          name: 'Bis',
+                          params: {
+                            author: 'Jane',
+                            count: undefined,
+                            answer: undefined,
+                            valid: undefined,
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
+  expect(getPathFromState(state, config)).toBe(path);
+  expect(getPathFromState(getStateFromPath(path, config), config)).toBe(path);
 });
