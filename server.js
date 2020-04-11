@@ -1,7 +1,9 @@
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const axios = require('axios')
+const axios = require('axios');
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
 require('dotenv').config();
 
 
@@ -14,6 +16,19 @@ app.use(cors());
 // Parse middleware before handlers
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+var jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: process.env.JWKS_URI
+  }),
+  audience: process.env.AUDIENCE,
+  issuer: process.env.ISSUER,
+  algorithms: ['RS256']
+});
+app.use(jwtCheck);
 
 app.get('/api/user/getUser', async (req,res) => {
     console.log(req)
