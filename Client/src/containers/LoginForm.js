@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
+import userServices from'../../Services/userServices';
 
 import {connect} from 'react-redux'
 import {login} from '../actions'
@@ -16,42 +17,44 @@ class LoginForm extends Component {
 
         login.bind(this)
     }
-
     state = {
         user: '',
         password: ''
     }
 
-    login = (user, password) => {
-        // redux store
-        this.props.dispatch(login(user, password))
-        console.log(this.state.user)
-        this.setState({
-            user: '',
-            password: ''
-        })
+    onLogin = async () => {
+        this.props.dispatch(login(this.state.user, this.state.password))
+        if (this.state.user.length >= 1 && this.state.password.length >= 1)
+        {
+            let data = this.state;
+            console.log("hello" ,data)
+            let AT = await userServices.login(data);
+            console.log('AT', AT)
+                if(AT.status !== 200)
+                {
+                    alert('User not found')
+                } else {
+                alert('User found! Current user is: ' + AT.data.firstName +" "+ AT.data.lastName)
+                    this.setState({
+                        user:"",
+                        password:""
+                    })
+            }
+        }   
+        else {
+            console.log("error msg")
+            alert('Enten medlems nummeret eller passwordet er forkert')
+        }
     }
 
-    setUserState = (input) => {
-        this.setState({
-            user: input
-        })
-    }
-
-    setPasswordState = (input) => {
-        this.setState({
-            password: input
-        })
-    }
-
-    login = () => {
+    /*login = () => {
         this.props.dispatch(login(this.state.user, this.state.password))
         this.setState({
             user: '',
             password: ''
         })
-        console.log(this.state.user)
-    }
+        console.log("props: ", this.props.children," STATE: ",this.state)
+    }*/
 
     render() {
         return (
@@ -60,7 +63,7 @@ class LoginForm extends Component {
                     marginVertical={10}
                     type={'username'}
                     name={'user'}
-                    callbackMethod={this.setUserState}
+                    callbackMethod={(user) => this.setState({user})}
                     placeholder={'Medlemsnummer eller e-mail'}
                 />
 
@@ -68,7 +71,7 @@ class LoginForm extends Component {
                     marginVertical={10}
                     type={'password'}
                     name={'password'}
-                    callbackMethod={this.setPasswordState}
+                    callbackMethod={(password) => this.setState({password})}
                     placeholder={'Adgangskode'}
                 />
 
@@ -76,7 +79,7 @@ class LoginForm extends Component {
                     marginTop={40}
                     marginBottom={15}
                     text={'LOGIN'}
-                    onPressMethod={this.login}
+                    onPressMethod={this.onLogin}
                 />
 
                 <Text style={GeneralTheme.smallText}>Har du ikke en bruger? <Text style={{textDecorationLine: 'underline'}}>Opret en her</Text></Text>

@@ -1,10 +1,16 @@
 const authentication = (state=[], action) => {
     switch (action.type) {
-        case 'ADD_TODO':
+        case 'LOGIN':
             return [
                 ...state, {
                     user: action.user,
                     password: action.password
+                }
+            ]
+        case 'LOGOUT':
+            return [
+                ...state, {
+
                 }
             ]
         default:

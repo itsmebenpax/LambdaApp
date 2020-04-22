@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 
-export default class CreateLoginPage extends Component {
+import SignupFrom from '../../containers/SignupFrom';
+
+class CreatePage extends Component {
     render() {
         return (
             <View>
-                <Text> textInComponent </Text>
+                <SignupFrom />
             </View>
         )
     }
 }
+export default CreatePage

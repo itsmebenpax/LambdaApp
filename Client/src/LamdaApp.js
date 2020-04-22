@@ -3,6 +3,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native'
 //import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 import LoginScreen from './components/screens/LoginScreen'
+import CreatePage from './components/screens/CreatePage'
 
 export default class LamdaApp extends Component {
     render() {
@@ -28,7 +29,7 @@ export default class LamdaApp extends Component {
                     </NavigationContainer> */}
                 ) : isRegisteringUser ? 
                     (
-                    <CreateLoginPage/>
+                    <CreatePage/>
                     ) : (
                     <LoginScreen/>
                     )
