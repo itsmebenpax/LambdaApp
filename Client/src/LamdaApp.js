@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, ImageBackground } from 'react-native'
-//import { createBottomTabNavigator } from 'react-navigation-tabs'
 
-import LoginScreen from './components/screens/LoginScreen'
+import Navigator from './navigation/Navigator'
 
 export default class LamdaApp extends Component {
-    render() {
-        let isLoggedIn = false;
-        let isRegisteringUser = false;
+    constructor(props) {
+        super(props)
+    }
 
-        //const TabNavigator = createBottomTabNavigator();
+    render() {
 
         return (
             <ImageBackground
@@ -18,21 +17,7 @@ export default class LamdaApp extends Component {
             blurRadius={5}
             >
                 <View style={styles.container}>
-                {isLoggedIn ? 
-                (
-                    {/* <NavigationContainer>
-                        <TabNavigator.Navigator>
-                            <TabNavigator.Screen name="Forside" component={HomeScreen}/>
-                            <TabNavigator.Screen name="Medlemskort" component={MemberScreen}/>
-                        </TabNavigator.Navigator>
-                    </NavigationContainer> */}
-                ) : isRegisteringUser ? 
-                    (
-                    <CreateLoginPage/>
-                    ) : (
-                    <LoginScreen/>
-                    )
-                }
+                    <Navigator/>
                 </View>
             </ImageBackground>
         )

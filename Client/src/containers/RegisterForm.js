@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 
-import {connect} from 'react-redux'
-import {switch_to_navigator, switch_to_login_screen, switch_to_register_screen} from '../actions'
+import { connect } from 'react-redux'
 
 import FacebookLogo from '../components/elements/logos/FacebookLogo'
 import TwitterLogo from '../components/elements/logos/TwitterLogo'
@@ -10,34 +9,19 @@ import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput
 import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 import GeneralTheme from '../styles/GeneralTheme'
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
     constructor(props) {
         super(props)
     }
 
-    state = {
-        user: '',
-        password: ''
-    }
-
-    setUserState = (input) => {
-        this.setState({
-            user: input
-        })
-    }
-
-    setPasswordState = (input) => {
-        this.setState({
-            password: input
-        })
-    }
-
-    login = () => {
-        this.props.dispatch(switch_to_navigator())
-    }
-
     register = () => {
-        this.props.dispatch(switch_to_register_screen())
+        // what happens when u press register
+
+        // check validity of input
+
+        // talk to backend
+
+        // give response to user
     }
 
     render() {
@@ -46,34 +30,43 @@ class LoginForm extends Component {
                 <ThemeTextInput
                     marginVertical={10}
                     type={'username'}
-                    name={'user'}
-                    callbackMethod={this.setUserState}
-                    placeholder={'Medlemsnummer eller e-mail'}
+                    name={'membership_number'}
+                    callbackMethod={() => {}}
+                    placeholder={'Medlemsnummer'}
+                />
+
+                <ThemeTextInput
+                    marginVertical={10}
+                    type={'email'}
+                    name={'email'}
+                    callbackMethod={() => {}}
+                    placeholder={'Email'}
                 />
 
                 <ThemeTextInput
                     marginVertical={10}
                     type={'password'}
                     name={'password'}
-                    callbackMethod={this.setPasswordState}
-                    placeholder={'Adgangskode'}
+                    callbackMethod={() => {}}
+                    placeholder={'Ny adgangskode'}
+                />
+
+                <ThemeTextInput
+                    marginVertical={10}
+                    type={'password'}
+                    name={'password'}
+                    callbackMethod={() => {}}
+                    placeholder={'Bekræft adgangskode'}
                 />
 
                 <ThemeButton
                     marginTop={40}
                     marginBottom={15}
-                    text={'LOG IND'}
-                    onPressMethod={this.login}
+                    text={'REGISTRER BRUGER'}
+                    onPressMethod={this.register}
                 />
 
-                <Text style={GeneralTheme.smallText}>
-                    Har du ikke en bruger? <Text
-                        style={{textDecorationLine: 'underline'}}
-                        onPress={this.register}
-                    >Opret en her</Text>
-                </Text>
-
-                <Text style={[GeneralTheme.smallText, {marginTop: 80}]}>Login med Sociale Netværk</Text>
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Opret bruger med Sociale Netværk</Text>
 
                 <View style={{
                     flexDirection: 'row',
@@ -83,6 +76,10 @@ class LoginForm extends Component {
                     <FacebookLogo size={60} margin={20} />
                     <TwitterLogo size={60} margin={20}/>
                 </View>
+
+                <Text style={GeneralTheme.smallText}>
+                    Er du ikke medlem af foreningen endnu?
+                </Text>
             </View>
         )
     }
@@ -96,4 +93,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect()(LoginForm)
+export default connect()(RegisterForm)
