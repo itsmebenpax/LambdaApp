@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import userServices from'../../Services/userServices';
 
 import {connect} from 'react-redux'
-import {login} from '../actions'
+import {switch_to_navigator, switch_to_login_screen, switch_to_register_screen} from '../actions'
 
 import FacebookLogo from '../components/elements/logos/FacebookLogo'
 import TwitterLogo from '../components/elements/logos/TwitterLogo'
@@ -14,8 +14,6 @@ import GeneralTheme from '../styles/GeneralTheme'
 class LoginForm extends Component {
     constructor(props) {
         super(props)
-
-        login.bind(this)
     }
     state = {
         user: '',
@@ -55,6 +53,15 @@ class LoginForm extends Component {
         })
         console.log("props: ", this.props.children," STATE: ",this.state)
     }*/
+  
+
+    login = () => {
+        this.props.dispatch(switch_to_navigator())
+    }
+
+    register = () => {
+        this.props.dispatch(switch_to_register_screen())
+    }
 
     render() {
         return (
@@ -82,7 +89,12 @@ class LoginForm extends Component {
                     onPressMethod={this.onLogin}
                 />
 
-                <Text style={GeneralTheme.smallText}>Har du ikke en bruger? <Text style={{textDecorationLine: 'underline'}}>Opret en her</Text></Text>
+                <Text style={GeneralTheme.smallText}>
+                    Har du ikke en bruger? <Text
+                        style={{textDecorationLine: 'underline'}}
+                        onPress={this.register}
+                    >Opret en her</Text>
+                </Text>
 
                 <Text style={[GeneralTheme.smallText, {marginTop: 80}]}>Login med Sociale Netværk</Text>
 
