@@ -34,15 +34,6 @@ export default class LoginPage extends Component {
             alert('Enten medlems nummeret eller passwordet er forkert')
         }
     }
-    getUser = async () => {
-        let users = await userServices.getusers();
-        console.log(users);
-    }
-
-    handleSubmit = () => {
-        this.props.navigation.navigate('MemberCard')
-    }
-
     render() {
         return (
             <ImageBackground
