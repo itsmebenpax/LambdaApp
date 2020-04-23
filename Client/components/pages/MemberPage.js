@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet,Text, View, Button, TextInput } from 'react-native';
 
-import Backend from '../../fake-backend/LoginInformation'
 import Axios from 'axios';
 
 export default class MemberPage extends Component {
@@ -27,7 +26,7 @@ export default class MemberPage extends Component {
 
     render() {
         return (
-            <View style={styles.page}>
+            <View style={styles}>
                 <View style={styles.Avatar}>
                     <Text>{this.state.name.charAt(0)}</Text>
                 </View>
@@ -46,14 +45,14 @@ export default class MemberPage extends Component {
 }
 
 const styles = StyleSheet.create({
-    page:{
-        flex: 1,
+    container: {
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start'
     },
     Avatar:{
         height:100,
         width:100,
+        marginTop: 180,
         borderRadius: 50,
         backgroundColor: 'gray',
         justifyContent:'center',
