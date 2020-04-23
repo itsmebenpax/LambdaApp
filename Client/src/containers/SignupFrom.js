@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
 
 import userServices from '../../Services/userServices'
-import { register_memberr } from '../actions';
+
 import { connect } from 'react-redux';
 
 class SignupFrom extends Component {
     constructor(props) {
         super(props);
         
-        register_memberr.bind(this)
     }
     state = {
         membership_number:'',

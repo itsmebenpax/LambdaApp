@@ -27,6 +27,12 @@ const GeneralTheme = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 2, height: 2}
+    },
+    container: {
+        flex: 1,
+        resizeMode: 'contain',
+        width: '100%',
+        alignItems: 'center'
     }
 })
 

@@ -2,8 +2,6 @@ const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-var jwt = require('express-jwt');
-var jwks = require('jwks-rsa');
 require('dotenv').config();
 
 
@@ -16,19 +14,6 @@ app.use(cors());
 // Parse middleware before handlers
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-var jwtCheck = jwt({
-    secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: process.env.JWKS_URI
-  }),
-  audience: process.env.AUDIENCE,
-  issuer: process.env.ISSUER,
-  algorithms: ['RS256']
-});
-app.use(jwtCheck);
 
 app.get('/api/user/getUser', async (req,res) => {
     console.log(req)
@@ -63,24 +48,27 @@ app.post('/api/user/createUser', async (req, res) => {
 });
 
 app.post('/api/user/login', async (req, res) => {
-    console.log("login server",req.body)
+    var username = req.body.user;
+    if(username.includes("@")){
+        data = {
+            "email":username,
+            "password":req.body.password
+        }
+    } else if(/[0-9]/.test(username)){
+        data = {
+            "membership_number":username,
+            "password":req.body.password
+        }
+    } else{
+        return res.send("Ikke godkendt login info ")
+    }
     try {
-        const user = await axios.post(process.env.AWS_ENDPOINT+'validateLogin', req.body) 
+        const user = await axios.post(process.env.AWS_ENDPOINT+'login', data);
+        return res.send(user.data.token)
     } catch (error) {
         
+        console.log("Shits broke")
     }
-    
-    if(user !== undefined){
-        if(user.password === req.body.password)
-        {
-        console.log('server')
-        return res.status(200).send(user);
-        } else{
-            return res.status(401).send('password does not match')}
-        }  
-    else{
-        console.log('server faild')
-        return res.status(404).send('User not found!')}
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

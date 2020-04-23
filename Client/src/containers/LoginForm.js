@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import userServices from'../../Services/userServices';
+import * as SecureStore from 'expo-secure-store';
 
 import {connect} from 'react-redux'
 import {switch_to_navigator, switch_to_login_screen, switch_to_register_screen} from '../actions'
@@ -21,22 +22,26 @@ class LoginForm extends Component {
     }
 
     onLogin = async () => {
-        this.props.dispatch(login(this.state.user, this.state.password))
-        if (this.state.user.length >= 1 && this.state.password.length >= 1)
+        //this.props.dispatch(login(this.state.user, this.state.password))
+        if (/^[a-zA-Z0-9]+$/.test(this.state.user) && /^[a-zA-Z0-9]+$/.test(this.state.password))
         {
             let data = this.state;
             console.log("hello" ,data)
             let AT = await userServices.login(data);
-            console.log('AT', AT)
+            console.log('AT', AT.data)
                 if(AT.status !== 200)
                 {
                     alert('User not found')
                 } else {
-                alert('User found! Current user is: ' + AT.data.firstName +" "+ AT.data.lastName)
-                    this.setState({
-                        user:"",
-                        password:""
-                    })
+                this.setState({
+                    user:"",
+                    password:""
+                })
+                await SecureStore.setItemAsync("token", AT.data)
+                const token = await SecureStore.getItemAsync('token')
+                alert('Du er nu logget ind!')
+                console.log("SecureSTORE: ", token)
+                this.login();
             }
         }   
         else {
@@ -44,16 +49,6 @@ class LoginForm extends Component {
             alert('Enten medlems nummeret eller passwordet er forkert')
         }
     }
-
-    /*login = () => {
-        this.props.dispatch(login(this.state.user, this.state.password))
-        this.setState({
-            user: '',
-            password: ''
-        })
-        console.log("props: ", this.props.children," STATE: ",this.state)
-    }*/
-  
 
     login = () => {
         this.props.dispatch(switch_to_navigator())

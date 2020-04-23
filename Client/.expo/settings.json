@@ -3,6 +3,6 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "pc-db8",
-  "https": false
+  "urlRandomness": "t5-frc",
+  "https": true
 }
