@@ -19,7 +19,9 @@ export default{
     },
     createUser: async (data) => {
         data.password = await bcrypt.hashSync(data.password, 10);
+        console.log(data)
         let res = await axios.post('http://localhost:9000/api/user/createUser', data);
+        console.log(res)
         return res.status;
     },
 }

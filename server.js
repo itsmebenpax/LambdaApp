@@ -32,17 +32,13 @@ app.post('/api/user/getUserID', async (req,res) => {
 });
 
 app.post('/api/user/createUser', async (req, res) => {
-    const user = {
-        user_id: req.body.user_id,
-        email: req.body.email,
-        membership_number: req.body.membership_number,
-        password_hash: req.body.password
-    }
     try {
-        console.log("User object: ",user)
-        const result = await axios.post(process.env.AWS_ENDPOINT+'createUser', user, {headers: {'x-api-key': process.env.AWS_KEY}});
-        return res.send(result.status) 
+        console.log("User object: ",req.body)
+        const result = await axios.post(process.env.AWS_ENDPOINT+'createUser', req.body);
+        console.log("After: ",result); 
+        return res.sendStatus(200); 
     } catch (error) {
+        console.log("error")
         return res.status("Error")
     }
 });

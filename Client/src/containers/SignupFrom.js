@@ -25,13 +25,6 @@ class SignupFrom extends Component {
         reaped_password:''
     }
 
-    onGet = async () => {
-        let data = {membership_number: this.state.membership_number};
-        const user = await userServices.getUserWithID(data);
-        alert("User with MN: " + user.membership_number + " and email: " + user.email + " was found")
-        
-    }
-
     onCreate = async () => {
         if(this.state.reaped_password != this.state.password)
         {
