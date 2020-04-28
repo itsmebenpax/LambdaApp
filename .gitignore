@@ -15,5 +15,5 @@ web-report/
 # macOS
 .DS_Store
 node_modules/*
-Client/node_modules/*
+Client/node_modules
 node_modules

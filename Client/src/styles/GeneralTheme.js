@@ -32,8 +32,39 @@ const GeneralTheme = StyleSheet.create({
         flex: 1,
         resizeMode: 'contain',
         width: '100%',
-        alignItems: 'center'
+        alignItems:'center'
+    },
+    samllThemeButton: {
+        padding:7,
+        paddingHorizontal: 10,
+        width: '40%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderRadius: 30,
+        fontSize: 3,
+        fontFamily: 'Avenir',
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 2, height: 2},
+        height:'5%',
+        alignSelf:'flex-start'
+    },
+    bigThemeButton:{
+        padding:7,
+        paddingHorizontal: 10,
+        width: '40%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderRadius: 30,
+        fontSize: 3,
+        fontFamily: 'Avenir',
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        shadowOffset: { width: 2, height: 2},
+        height:'5%',
+        alignSelf:'flex-start'
     }
+
 })
 
 export default GeneralTheme

@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, ScrollView, SafeAreaView, } from 'react-native'
+const DropDown = require('react-native-dropdown');
+const {
+  Select,
+  Option,
+  OptionList,
+  updatePosition
+} = DropDown;
 
 import userServices from '../../Services/userServices'
-
+import ThemeButton from '../components/elements/theme-elements/ThemeButton'
+import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput'
+import GeneralTheme from '../styles/GeneralTheme'
 import { connect } from 'react-redux';
 
 class SignupFrom extends Component {
@@ -11,206 +20,184 @@ class SignupFrom extends Component {
         
     }
     state = {
-        membership_number:'',
         firstName: '',
         lastName:'',
         email:'',
         address:'',
         city:'',
-        postel_code:'',
+        zip:'',
         phone_number: '',
         birthday:'',
-        gender:'',
+        gender:-1,
         password: '',
-        reaped_password:''
-    }
+        reaped_password:'',
+        membertypeID:71,
+        sms:'Modtage smser',
+        emails:'Modtage emails',
+        
 
+    }
     onCreate = async () => {
-        if(this.state.reaped_password != this.state.password)
+        if(this.state.password != '' || this.state.firstName != '' || this.state.email != '')
         {
-            alert('Adgangskoden skal være ens!')
-        } else {
             let data = {
-                membership_number: this.state.membership_number,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 email: this.state.email,
                 address: this.state.address,
                 city: this.state.city,
-                postel_code: this.state.postel_code,
+                zip: this.state.zip,
                 phone_number: this.state.phone_number,
                 birthday: this.state.birthday,
                 gender: this.state.gender,
                 password: this.state.password,
+                membertypeID: this.state.membertypeID,
+                sms: this.state.sms,
+                emails: this.state.emails,
+                eMembershipCard: 1,
             }
             const res = await userServices.createUser(data);
             if(res === 200)
             alert("User have been created!");
-            
+        }else if(this.state.reaped_password != this.state.password)
+        {
+            alert('Adgangskoden skal være ens!')
+        } else {
+            alert('Alle felter skal være udfyldt')
         }
         
     } 
     render() {
+        const genderOptions = [{ value: 0, label: 'Ikke angivet' }, {value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
+        const YNOptions = [{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         return (
-            <View style={styles.container}>
-                <Text style={styles.headerText}>Indtast oplysninger</Text>
-                <TextInput
-                    name='membership_number'
-                    placeholder='Medlems Nummber'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(membership_number) => this.setState({membership_number})}
-                    value={this.state.membership_number}
-                    autoCompleteType='off'
-                />
-                <TextInput
+        <SafeAreaView style={GeneralTheme.container}>
+            <ScrollView contentContainerStyle={{width: this.props.width}}>
+                <Text style={GeneralTheme.smallText}>Indtast oplysninger</Text>
+                <ThemeTextInput
                     name='firstName'
                     placeholder='Fornavn'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(firstName) => this.setState({firstName})}
+                    style={styles.textInput}
+                    callbackMethod={(firstName) => this.setState({firstName})}
                     value={this.state.firstName}
                     autoCompleteType='username'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='lastName'
                     value={this.state.lastName}
                     placeholder='Efternavn'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(lastName) => this.setState({lastName})}
+                    style={styles.textInput}
+                    callbackMethod={(lastName) => this.setState({lastName})}
                     autoCompleteType='username'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='email'
                     value={this.state.email}
                     placeholder='Email'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(email) => this.setState({email})}
+                    style={styles.textInput}
+                    keyboardType='email-address'
+                    callbackMethod={(email) => this.setState({email})}
                     autoCompleteType='email'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='address'
                     value={this.state.address}
                     placeholder='Adresse'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(address) => {this.setState({address})}}
+                    style={styles.textInput}
+                    callbackMethod={(address) => {this.setState({address})}}
                     autoCompleteType='street-address'
                 />
-                <TextInput
-                    name='postel_code'
-                    value={this.state.postel_code}
+                <ThemeTextInput
+                    name='zip'
+                    value={this.state.zip}
                     placeholder='Post nummer'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(postel_code) => this.setState({postel_code})}
+                    style={styles.textInput}
+                    keyboardType='numeric'
+                    callbackMethod={(zip) => this.setState({zip})}
                     autoCompleteType='postal-code'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='city'
                     value={this.state.city}
                     placeholder='By'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(city) => this.setState({city})}
+                    style={styles.textInput}
+                    callbackMethod={(city) => this.setState({city})}
                     autoCompleteType='off'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='phone_number'
                     value={this.state.phone_number}
                     placeholder='Telefon nummber'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(phone_number) => this.setState({phone_number})}
+                    keyboardType='phone-pad'
+                    style={styles.textInput}
+                    callbackMethod={(phone_number) => this.setState({phone_number})}
                     autoCompleteType='tel'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='birthday'
                     value={this.state.birthday}
-                    placeholder='Fødselsdag'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(birthday) => this.setState({birthday})}
+                    placeholder='Fødselsdag (dd-mm-yyyy)'
+                    style={styles.textInput}
+                    callbackMethod={(birthday) => this.setState({birthday})}
                     autoCompleteType='off'
                 />
-                <TextInput
-                    name='gender'
-                    value={this.state.gender}
-                    placeholder='Køn'
-                    style={[styles.theme, styles.input]}
-                    onChangeText={(gender) => this.setState({gender})}
-                    autoCompleteType='off'
-                />
-                <TextInput
+                <Select 
+                    style={[styles.textInput,styles.selecter]}
+                    textStyle={GeneralTheme.smallText}
+                    placeholder={'Køn'}
+                    onSelect={(value) => console.log(value)}
+                    search={false}
+                    data={genderOptions}
+                 />
+                
+                <ThemeTextInput
                     name='password'
+                    type='password'
                     value={this.state.password}
                     placeholder='Adgangskode'
-                    style={[styles.theme, styles.input]}
                     secureTextEntry={true}
-                    onChangeText={(password) => this.setState({password})}
+                    style={styles.textInput}
+                    callbackMethod={(password) => this.setState({password})}
                     autoCompleteType='off'
                 />
-                <TextInput
+                <ThemeTextInput
                     name='reaped_password'
+                    type='password'
                     value={this.state.reaped_password}
                     placeholder='Genag adgangskode'
-                    style={[styles.theme, styles.input]}
                     secureTextEntry={true}
-                    onChangeText={(reaped_password) => this.setState({reaped_password})}
+                    style={styles.textInput}
+                    callbackMethod={(reaped_password) => this.setState({reaped_password})}
                     autoCompleteType='off'
                 />
-                <TouchableOpacity
+                <ThemeButton
                     title='Create'
                     type='outline'
-                    style={[styles.theme, styles.button]}
-                    onPress={this.onCreate}>
-                    <Text style={styles.text}> Opret bruger </Text>
-                </TouchableOpacity>
-            </View>
+                    style={[ GeneralTheme.themeButton, styles.textInput]}
+                    onPressMethod={this.onCreate}
+                    text='Opret bruger'>
+                </ThemeButton>
+            </ScrollView>
+        </SafeAreaView>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    input: {
-        marginVertical: 10,
-        backgroundColor: 'white',
-        borderColor: 'white',
-        shadowColor: 'white',
-        
+    textInput:{
+        marginTop:10
     },
-    button: {
-        marginVertical: 10,
-        marginTop: 30,
-        backgroundColor: '#7a450c',
-        borderColor: '#7a450c',
-        shadowColor: '#7a450c',
-        marginBottom: 15,
-        justifyContent:'center',
-        
+    selecter:{
+        backgroundColor:'white',
     },
-    theme: {
-        height:30,
-        paddingHorizontal: 30,
-        width: '70%',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderRadius: 30,
-        fontSize: 15,
+    selectertext:{
         fontFamily: 'Avenir',
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: { width: 2, height: 2}
-    },
-    text: {
-        textAlign: 'center',
-        color: '#000',
-        fontSize: 15,
-        fontFamily: 'Avenir'
-    },
-    headerText: {
-        textAlign: 'center',
-        color: '#000',
-        fontSize: 20,
-        fontFamily: 'Avenir'
-    },
-    container: {
-        marginTop:20,
-        alignItems: 'center',
-        justifyContent: 'flex-start'
-    },
+        opacity: 0.2,
+        fontSize: 16,
+        
+    }
+
+
 })
+
 export default connect()(SignupFrom)

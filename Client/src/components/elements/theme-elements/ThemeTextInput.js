@@ -42,7 +42,7 @@ class ThemeTextInput extends Component {
                 placeholder={placeholder}
                 secureTextEntry={secureTextEntry}
                 autoCompleteType={type}
-                onChangeText={(input) => this.props.callbackMethod(input)}
+                callbackMethod={(input) => this.props.callbackMethod(input)}
     
                 style={[GeneralTheme.theme, {
                     margin: margin,
