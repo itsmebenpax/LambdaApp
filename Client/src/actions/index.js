@@ -1,26 +1,16 @@
-import {LOGIN, LOGOUT, REGISTER_USER, REGISTER_AS_MEMBER} from './actionTypes'
+import {LOGIN, LOGOUT, SWITCH_TO_SIGN_UP_SCREEN} from './actionTypes'
 import {SWITCH_TO_NAVIGATOR, SWITCH_TO_LOGIN_SCREEN, SWITCH_TO_REGISTER_SCREEN} from './actionTypes'
 
 // authentication
 export const login = (user, password) => ({
-    type: 'LOGIN',
+    type: LOGIN,
     user: user,
     password: password
 })
 
 export const logout = (token) => ({
-    type: 'LOGOUT',
+    type: LOGOUT,
     token: token
-})
-
-export const register_user = () => ({
-    type: 'REGISTER_USER',
-    
-})
-
-export const register_member = () => ({
-    type: 'REGISTER_AS_MEMBER',
-    
 })
 
 // navigation
@@ -36,3 +26,6 @@ export const switch_to_register_screen = () => ({
     type: SWITCH_TO_REGISTER_SCREEN
 })
 
+export const switch_to_sign_up_screen = () => ({
+    type: SWITCH_TO_SIGN_UP_SCREEN
+})

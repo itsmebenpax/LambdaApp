@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import { LOGGED_OUT, LOGGED_IN, REGISTERING } from './userStatus'
+import { LOGGED_OUT, LOGGED_IN, REGISTERING, SIGNING_UP } from './userStatus'
 import { connect } from 'react-redux'
 
 import LoginScreen from '../components/screens/LoginScreen'
 import RegisterScreen from '../components/screens/RegisterScreen'
 import HomeScreen from '../components/screens/HomeScreen'
+import SignupForm from '../containers/SignupForm'
+import SignUpScreen from '../components/screens/SignUpScreen'
 
 class Navigator extends Component {
     constructor(props) {
@@ -36,6 +38,10 @@ class Navigator extends Component {
             case REGISTERING:
                 return (
                     <RegisterScreen/>
+                )
+            case SIGNING_UP:
+                return (
+                    <SignUpScreen/>
                 )
             default:
                 return (

@@ -91,7 +91,7 @@ class LoginForm extends Component {
                     >Opret en her</Text>
                 </Text>
 
-                <Text style={[GeneralTheme.smallText, {marginTop: 80}]}>Login med Sociale Netværk</Text>
+                {/*<Text style={[GeneralTheme.smallText, {marginTop: 80}]}>Login med Sociale Netværk</Text>
 
                 <View style={{
                     flexDirection: 'row',
@@ -101,6 +101,7 @@ class LoginForm extends Component {
                     <FacebookLogo size={60} margin={20} />
                     <TwitterLogo size={60} margin={20}/>
                 </View>
+                */}
             </View>
         )
     }
