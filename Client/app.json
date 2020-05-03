@@ -8,6 +8,7 @@
       "android",
       "web"
     ],
+    
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
+    }, "extra":{
+        "endpoint":"https://eye2k52hxd.execute-api.eu-north-1.amazonaws.com/default/"
     }
   }
 }

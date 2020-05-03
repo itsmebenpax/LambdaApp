@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 
 export class eventScreen extends Component {
     static propTypes = {

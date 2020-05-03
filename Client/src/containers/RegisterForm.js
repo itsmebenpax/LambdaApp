@@ -22,6 +22,7 @@ class RegisterForm extends Component {
         reaped_password:''
     }
     register = async () => {
+        console.log("Register: ",this.state)
         if(this.state.reaped_password != this.state.password)
         {
             alert('Adgangskoden skal være ens!')
@@ -47,7 +48,7 @@ class RegisterForm extends Component {
                     marginVertical={10}
                     type={'username'}
                     name={'membership_number'}
-                    callbackMethod={(membership_number) => this.setState({membership_number})}
+                    onChangeText={(membership_number) => this.setState({membership_number})}
                     placeholder={'Medlemsnummer'}
                 />
 
@@ -55,7 +56,8 @@ class RegisterForm extends Component {
                     marginVertical={10}
                     type={'email'}
                     name={'email'}
-                    callbackMethod={(email) => this.setState({email})}
+                    value={this.state.email}
+                    onChangeText={(email) => this.setState({email})}
                     placeholder={'Email'}
                 />
 
@@ -63,7 +65,7 @@ class RegisterForm extends Component {
                     marginVertical={10}
                     type={'password'}
                     name={'password'}
-                    callbackMethod={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({password})}
                     placeholder={'Ny adgangskode'}
                 />
 
@@ -71,7 +73,7 @@ class RegisterForm extends Component {
                     marginVertical={10}
                     type={'password'}
                     name={'reaped_password'}
-                    callbackMethod={(reaped_password) => this.setState({reaped_password})}
+                    onChangeText={(reaped_password) => this.setState({reaped_password})}
                     placeholder={'Bekræft adgangskode'}
                 />
 

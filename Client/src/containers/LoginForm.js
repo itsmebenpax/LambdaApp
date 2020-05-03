@@ -4,7 +4,7 @@ import userServices from'../../Services/userServices';
 import * as SecureStore from 'expo-secure-store';
 
 import {connect} from 'react-redux'
-import {switch_to_navigator, switch_to_login_screen, switch_to_register_screen} from '../actions'
+import {switch_to_navigator, switch_to_register_screen} from '../actions'
 
 import FacebookLogo from '../components/elements/logos/FacebookLogo'
 import TwitterLogo from '../components/elements/logos/TwitterLogo'
@@ -21,14 +21,19 @@ class LoginForm extends Component {
         password: ''
     }
 
+    validateInput = async (input) => {
+        let validation = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;        
+        return validation.test(input)
+    }
+
     onLogin = async () => {
-        //this.props.dispatch(login(this.state.user, this.state.password))
-        if (/^[a-zA-Z0-9]+$/.test(this.state.user) && /^[a-zA-Z0-9]+$/.test(this.state.password))
+
+        if (this.validateInput(this.state.user) && this.validateInput(this.state.password))
         {
             let data = this.state;
             console.log("hello" ,data)
             let AT = await userServices.login(data);
-            console.log('AT', AT.data)
+            console.log('AT', AT)
                 if(AT.status !== 200)
                 {
                     alert('User not found')
@@ -37,7 +42,7 @@ class LoginForm extends Component {
                     user:"",
                     password:""
                 })
-                await SecureStore.setItemAsync("token", AT.data)
+                await SecureStore.setItemAsync("token", AT.token)
                 const token = await SecureStore.getItemAsync('token')
                 alert('Du er nu logget ind!')
                 console.log("SecureSTORE: ", token)
@@ -65,7 +70,7 @@ class LoginForm extends Component {
                     marginVertical={10}
                     type={'username'}
                     name={'user'}
-                    callbackMethod={(user) => this.setState({user})}
+                    onChangeText={(user) => this.setState({user})}
                     placeholder={'Medlemsnummer eller e-mail'}
                 />
 
@@ -73,7 +78,7 @@ class LoginForm extends Component {
                     marginVertical={10}
                     type={'password'}
                     name={'password'}
-                    callbackMethod={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({password})}
                     placeholder={'Adgangskode'}
                 />
 

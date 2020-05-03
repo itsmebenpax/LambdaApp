@@ -7,24 +7,13 @@ import GeneralTheme from '../../styles/GeneralTheme'
 
 export default class HomePage extends Component {
     render() {
+        console.log('Hello fro homeScreen')
         return (
-            <View style={GeneralTheme.container, {}}>
-                <Text style={GeneralTheme.text}> Home Page </Text>
-                <ThemeButton
-                    marginTop={40}
-                    marginBottom={15}
-                    text={'Events'}
-                    onPressMethod={this.onLogin}
-                />
-                <ThemeButton
-                    marginTop={40}
-                    marginBottom={15}
-                    text={'Medlems side'}
-                    onPressMethod={this.onLogin}
-                />
+            <View style={{flex:1, alignContent:'center', justifyContent:'center'}}>
+                <Text style={{color:'White'}}>Hello</Text>
             </View>
-            
         )
+        
     }
 }
 

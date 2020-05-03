@@ -14,6 +14,20 @@ const GeneralTheme = StyleSheet.create({
         opacity: 0.9,
         fontSize: 16
     },
+    cardText: {
+        color: 'white',
+        fontFamily: 'Avenir',
+        opacity: 0.9,
+        fontSize: 20,
+        marginBottom:10
+    },
+    Headertext: {
+        color: 'white',
+        fontFamily: 'Avenir',
+        opacity: 0.9,
+        fontSize: 30,
+        marginBottom:20
+    },
     
     theme: {
         padding: 18,

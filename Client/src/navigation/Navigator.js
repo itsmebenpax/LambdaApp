@@ -3,22 +3,29 @@ import { Text, View } from 'react-native'
 import { LOGGED_OUT, LOGGED_IN, REGISTERING } from './userStatus'
 import { connect } from 'react-redux'
 
+
 import LoginScreen from '../components/screens/LoginScreen'
 import RegisterScreen from '../components/screens/RegisterScreen'
-import HomeScreen from '../components/screens/HomeScreen'
+import UserNavigation from './UserNavigation'
+import MemberScreen from '../components/screens/MemberScreen'
+
 
 class Navigator extends Component {
     constructor(props) {
         super(props)
     }
+    
 
     render() {
+        
         return (
             <View>
                 {this.switchView()}
             </View>
         )
     }
+
+    
 
     switchView() {
         console.log(this.props.user_navigator_status)
@@ -30,7 +37,7 @@ class Navigator extends Component {
             case LOGGED_IN:
                 console.log("Logged in")
                 return (
-                    <HomeScreen />
+                    <MemberScreen />
                     
                 )
             case REGISTERING:
@@ -53,5 +60,7 @@ const mapStateToProps = (state) => {
         user_navigator_status: state.navigator.user_navigator_status
     }
 }
+
+
 
 export default connect(mapStateToProps)(Navigator)

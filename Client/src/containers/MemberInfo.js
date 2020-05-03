@@ -1,68 +1,32 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native'
-import SelectInput from 'react-native-select-input-ios';
-
-import userServices from '../../Services/userServices'
+import { StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import { connect } from 'react-redux'
+import * as SecureStore from 'expo-secure-store';
 import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput'
+import SelectInput from 'react-native-select-input-ios';
 import GeneralTheme from '../styles/GeneralTheme'
-import { connect } from 'react-redux';
+import userServices from '../../Services/userServices'
 
-class SignupFrom extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
-    state = {
-        firstName: '',
-        lastName:'',
-        email:'',
-        address:'',
-        city:'',
-        zip:'',
-        phone_number: '',
-        birthday:'',
-        gender:-1,
-        password: '',
-        reaped_password:'',
-        membertypeID:71,
-        sms:-1,
-        emails:-1,
-        
-
-    }
-    onCreate = async () => {
-        console.log("signup: ",this.state)
-        if(this.state.password != '' || this.state.firstName != '' || this.state.email != '')
-        {
-            let data = {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                address: this.state.address,
-                city: this.state.city,
-                zip: this.state.zip,
-                phone_number: this.state.phone_number,
-                birthday: this.state.birthday,
-                gender: this.state.gender,
-                password: this.state.password,
-                membertypeID: this.state.membertypeID,
-                sms: this.state.sms,
-                emails: this.state.emails,
-                eMembershipCard: 1,
-            }
-            const res = await userServices.createUser(data);
-            if(res === 200)
-            alert("User have been created!");
-        }else if(this.state.reaped_password != this.state.password)
-        {
-            alert('Adgangskoden skal være ens!')
-        } else {
-            alert('Alle felter skal være udfyldt')
+export class MemberInfo extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            user: '',
+            isLoading:true
         }
-        
-    } 
+    }
+componentDidMount = async() =>{
+    let userObject = JSON.parse(await userServices.getUserWithID(await SecureStore.getItemAsync('token')));
+    this.setState({user: userObject.resultdata.member})
+}
+
+onSubmit = async() =>{
+    alert('Hello')
+}
+
     render() {
+        console.log('User: ', this.state.user.Firstname)
         const genderOptions = [{value:-1, label:'Køn'},{ value: 0, label: 'Ikke angivet' }, {value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
         const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         const EmailsYNOptions = [{value:-1, label: 'Modtage emails'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
@@ -72,10 +36,10 @@ class SignupFrom extends Component {
                 <Text style={GeneralTheme.smallText}>Indtast oplysninger</Text>
                 <ThemeTextInput
                     name='firstName'
-                    placeholder='Fornavn'
+                    placeholder={(this.state.user.Firstname)}
                     style={styles.textInput}
                     onChangeText={(firstName) => this.setState({firstName})}
-                    value={this.state.firstName}
+                    value={this.state.user.Firstname}
                     autoCompleteType='username'
                 />
                 <ThemeTextInput
@@ -129,18 +93,10 @@ class SignupFrom extends Component {
                     onChangeText={(phone_number) => this.setState({phone_number})}
                     autoCompleteType='tel'
                 />
-                <ThemeTextInput
-                    name='birthday'
-                    value={this.state.birthday}
-                    placeholder='Fødselsdag (dd-mm-yyyy)'
-                    style={styles.textInput}
-                    onChangeText={(birthday) => this.setState({birthday})}
-                    autoCompleteType='off'
-                />
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
-                    value={this.state.gender} options={genderOptions}   
+                    value={this.state.user} options={genderOptions}   
                     onValueChange={(gender) => this.setState({gender})}
                      
                 />
@@ -181,15 +137,16 @@ class SignupFrom extends Component {
                     title='Create'
                     type='outline'
                     style={[ GeneralTheme.themeButton, styles.textInput]}
-                    onPressMethod={this.onCreate}
-                    text='Opret bruger'>
+                    onPressMethod={this.onSubmit}
+                    text='Opdater oplysninger'>
                 </ThemeButton>
             </ScrollView>
         </SafeAreaView>
+            
         )
+        
     }
 }
-
 const styles = StyleSheet.create({
     textInput:{
         marginTop:10
@@ -207,4 +164,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect()(SignupFrom)
+export default connect()(MemberInfo)
