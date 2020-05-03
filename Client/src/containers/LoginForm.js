@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native'
 import userServices from'../../Services/userServices';
 import * as SecureStore from 'expo-secure-store';
 
@@ -11,6 +11,8 @@ import TwitterLogo from '../components/elements/logos/TwitterLogo'
 import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput'
 import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 import GeneralTheme from '../styles/GeneralTheme'
+import Loader from '../components/elements/theme-elements/Loader'
+
 
 class LoginForm extends Component {
     constructor(props) {
@@ -18,7 +20,8 @@ class LoginForm extends Component {
     }
     state = {
         user: '',
-        password: ''
+        password: '',
+        isLoading:false
     }
 
     validateInput = async (input) => {
@@ -30,10 +33,9 @@ class LoginForm extends Component {
 
         if (this.validateInput(this.state.user) && this.validateInput(this.state.password))
         {
+            this.setState({isLoading:true})
             let data = this.state;
-            console.log("hello" ,data)
             let AT = await userServices.login(data);
-            console.log('AT', AT)
                 if(AT.status !== 200)
                 {
                     alert('User not found')
@@ -44,8 +46,8 @@ class LoginForm extends Component {
                 })
                 await SecureStore.setItemAsync("token", AT.token)
                 const token = await SecureStore.getItemAsync('token')
-                alert('Du er nu logget ind!')
                 console.log("SecureSTORE: ", token)
+                this.setState({isLoading:false})
                 this.login();
             }
         }   
@@ -66,6 +68,8 @@ class LoginForm extends Component {
     render() {
         return (
             <View style={[styles.container, {width: this.props.width}]}>
+                <Loader isLoading={this.state.isLoading} />
+                
                 <ThemeTextInput
                     marginVertical={10}
                     type={'username'}
@@ -117,6 +121,16 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'contain',
         alignItems: 'center'
+    },
+    overlay:{
+        justifyContent:'center',
+        alignItems:'center'
+
+    },
+    overlay_kid:{
+        width:150, 
+        height:150, 
+        justifyContent:'center'
     }
 })
 

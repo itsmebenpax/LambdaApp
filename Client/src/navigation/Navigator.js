@@ -9,6 +9,9 @@ import RegisterScreen from '../components/screens/RegisterScreen'
 import HomeScreen from '../components/screens/HomeScreen'
 import SignupForm from '../containers/SignupForm'
 import SignUpScreen from '../components/screens/SignUpScreen'
+import MemberScreen from '../components/screens/MemberScreen'
+
+
 
 class Navigator extends Component {
     constructor(props) {

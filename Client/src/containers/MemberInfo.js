@@ -7,18 +7,43 @@ import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput
 import SelectInput from 'react-native-select-input-ios';
 import GeneralTheme from '../styles/GeneralTheme'
 import userServices from '../../Services/userServices'
+import Loader from '../components/elements/theme-elements/Loader'
 
 export class MemberInfo extends Component {
     constructor(props){
         super(props)
         this.state = {
-            user: '',
-            isLoading:true
+            isLoading:true,
+            firstName: "",
+            lastName: "",
+            email: "",
+            address: "",
+            city: "",
+            zip: "",
+            phone_number: "",
+            gender: "",
+            password: "",
+            sms: "",
+            emails: "",
+            
         }
     }
 componentDidMount = async() =>{
     let userObject = JSON.parse(await userServices.getUserWithID(await SecureStore.getItemAsync('token')));
-    this.setState({user: userObject.resultdata.member})
+    console.log(userObject)
+    this.setState({
+        firstName: userObject.resultdata.member.Firstname,
+        lastName: userObject.resultdata.member.Lastname,
+        email: userObject.resultdata.member.Email,
+        address: userObject.resultdata.member.Address,
+        city: userObject.resultdata.member.City,
+        zip: userObject.resultdata.member.Zip,
+        phone_number: userObject.resultdata.member.Phone_number,
+        gender: userObject.resultdata.member.gender,
+        password: "",
+        sms: userObject.resultdata.member.SMS,
+        emails: userObject.resultdata.member.Emails,
+        isLoading:false})
 }
 
 onSubmit = async() =>{
@@ -26,20 +51,21 @@ onSubmit = async() =>{
 }
 
     render() {
-        console.log('User: ', this.state.user.Firstname)
+        //console.log('User: ', this.state.user.firstName)
         const genderOptions = [{value:-1, label:'Køn'},{ value: 0, label: 'Ikke angivet' }, {value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
         const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         const EmailsYNOptions = [{value:-1, label: 'Modtage emails'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         return (
         <SafeAreaView style={GeneralTheme.container}>
             <ScrollView contentContainerStyle={{width: this.props.width}}>
+                <Loader isLoading={this.state.isLoading} />
                 <Text style={GeneralTheme.smallText}>Indtast oplysninger</Text>
                 <ThemeTextInput
                     name='firstName'
-                    placeholder={(this.state.user.Firstname)}
+                    placeholder={(this.state.firstName)}
                     style={styles.textInput}
                     onChangeText={(firstName) => this.setState({firstName})}
-                    value={this.state.user.Firstname}
+                    value={this.state.firstName}
                     autoCompleteType='username'
                 />
                 <ThemeTextInput

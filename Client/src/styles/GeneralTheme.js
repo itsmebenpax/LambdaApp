@@ -77,6 +77,16 @@ const GeneralTheme = StyleSheet.create({
         shadowOffset: { width: 2, height: 2},
         height:'5%',
         alignSelf:'flex-start'
+    },
+    overlay:{
+        justifyContent:'center',
+        alignItems:'center'
+
+    },
+    overlay_kid:{
+        width:150, 
+        height:150, 
+        justifyContent:'center'
     }
 
 })

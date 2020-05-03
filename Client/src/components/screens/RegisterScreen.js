@@ -7,7 +7,7 @@ import BackButton from '../elements/theme-elements/BackButton'
  
 import LambdaLogo from '../elements/logos/LambdaLogo'
 import RegisterForm from '../../containers/RegisterForm'
-import SignupFrom from '../../containers/SignupFrom';
+import SignupFrom from '../../containers/SignupFrom_MM';
 import { connect } from 'react-redux'
 import {switch_to_login_screen } from '../../actions'
 
