@@ -1,34 +1,69 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+
 import HomeScreen from '../components/screens/HomeScreen'
+import MemberCardScreen from '../components/screens/MemberCardScreen'
+import MemberInfoScreen from '../components/screens/MemberInfoScreen'
+import EventScreen from '../components/screens/EventScreen'
+import { USER_NAVIGATION } from '../actions/actionTypes'
+
+
+import OtherNavigator from './OtherNavigator'
 
 export class UserNavigation extends Component {
-    static propTypes = {
-        prop: PropTypes
+    constructor(props) {
+        super(props)
     }
 
     render() {
-        const Stack = createStackNavigator();
         return (
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                </Stack.Navigator>
-            </NavigationContainer>
+            <View style={{flex:1,width: '100%', height:'100%'}}>
+                {this.switchView()}
+                
+                <OtherNavigator/>
+            </View>  
+            
         )
+    }
+
+    switchView() {
+        console.log("User navi ",this.props.currentScreen)
+        switch (this.props.currentScreen) {
+            case USER_NAVIGATION.SWITCH_TO_HOME_SCREEN:
+                console.log("Home")
+                return (
+                    <HomeScreen />
+                )
+            case USER_NAVIGATION.SWITCH_TO_MEMBER_CARD_SCREEN:
+                return (
+                    <MemberCardScreen />
+                    
+                )
+            case USER_NAVIGATION.SWITCH_TO_MEMBER_INFO_SCREEN:
+                return (
+                    <MemberInfoScreen />
+                )
+            case USER_NAVIGATION.SWITCH_TO_EVENT_SCREEN:
+                return (
+                    <EventScreen />
+                )
+
+            default:
+                console.log("Default")
+                return (
+                    <HomeScreen/>
+                )
+
+        }
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
     
-})
-
-const mapDispatchToProps = {
-    
+    return {
+        currentScreen: state.userNavigator.currentScreen
+    }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserNavigation)
+export default connect(mapStateToProps)(UserNavigation)

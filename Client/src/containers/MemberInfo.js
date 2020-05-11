@@ -56,7 +56,7 @@ onSubmit = async() =>{
         const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         const EmailsYNOptions = [{value:-1, label: 'Modtage emails'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         return (
-        <SafeAreaView style={GeneralTheme.container}>
+        <SafeAreaView style={[GeneralTheme.container,{width:'100%', height:'100%'}]}>
             <ScrollView contentContainerStyle={{width: this.props.width}}>
                 <Loader isLoading={this.state.isLoading} />
                 <Text style={GeneralTheme.smallText}>Indtast oplysninger</Text>

@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import { LOGGED_OUT, LOGGED_IN, REGISTERING, SIGNING_UP } from './userStatus'
+import { LOGGED_OUT, LOGGED_IN, REGISTERING} from './userStatus'
 import { connect } from 'react-redux'
 
 
 import LoginScreen from '../components/screens/LoginScreen'
 import RegisterScreen from '../components/screens/RegisterScreen'
-import HomeScreen from '../components/screens/HomeScreen'
-import SignupForm from '../containers/SignupForm'
-import SignUpScreen from '../components/screens/SignUpScreen'
-import MemberScreen from '../components/screens/MemberScreen'
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import UserNavigation from './UserNavigation'
+import OtherNavigator from './OtherNavigator'
 
 
 class Navigator extends Component {
@@ -20,18 +16,14 @@ class Navigator extends Component {
         super(props)
     }
     
-
     render() {
         
         return (
-            <View>
+            <View style={{flex:1, width: '100%',marginTop:60, height:'100%'}}>
                 {this.switchView()}
             </View>
         )
     }
-
-    
-    
 
     switchView() {
         console.log(this.props.user_navigator_status)
@@ -42,21 +34,13 @@ class Navigator extends Component {
                 )
             case LOGGED_IN:
                 console.log("Logged in")
-                const Tab = createBottomTabNavigator();
                 return (
-                    <Tab.Navigator>
-                        <Tab.Screen name="Hjem" component={HomeScreen} />
-                        <Tab.Screen name="Medlems side" component={MemberScreen} />
-                    </Tab.Navigator>
+                    <UserNavigation/>
                     
                 )
             case REGISTERING:
                 return (
                     <RegisterScreen/>
-                )
-            case SIGNING_UP:
-                return (
-                    <SignUpScreen/>
                 )
             default:
                 return (

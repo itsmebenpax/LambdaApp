@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-import authentication from './authentication'
+
 import navigator from './navigator'
+import userNavigator from './userNavigator'
 
 export default combineReducers({
-    authentication,
-    navigator
+    navigator,
+    userNavigator
 })
