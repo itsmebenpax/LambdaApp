@@ -11,6 +11,8 @@ import SignupForm from '../containers/SignupForm'
 import SignUpScreen from '../components/screens/SignUpScreen'
 import MemberScreen from '../components/screens/MemberScreen'
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 
 class Navigator extends Component {
@@ -29,6 +31,7 @@ class Navigator extends Component {
     }
 
     
+    
 
     switchView() {
         console.log(this.props.user_navigator_status)
@@ -39,8 +42,12 @@ class Navigator extends Component {
                 )
             case LOGGED_IN:
                 console.log("Logged in")
+                const Tab = createBottomTabNavigator();
                 return (
-                    <MemberScreen />
+                    <Tab.Navigator>
+                        <Tab.Screen name="Hjem" component={HomeScreen} />
+                        <Tab.Screen name="Medlems side" component={MemberScreen} />
+                    </Tab.Navigator>
                     
                 )
             case REGISTERING:

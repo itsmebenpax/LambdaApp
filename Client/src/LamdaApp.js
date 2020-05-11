@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, ImageBackground } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
 
 import Navigator from './navigation/Navigator'
 
@@ -17,7 +18,9 @@ export default class LamdaApp extends Component {
             blurRadius={5}
             >
                 <View style={styles.container}>
-                    <Navigator/>
+                    <NavigationContainer>
+                        <Navigator/>
+                    </NavigationContainer>
                 </View>
             </ImageBackground>
         )

@@ -142,7 +142,7 @@ class RegisterForm extends Component {
                     type={'password'}
                     name={'password'}
                     style={this.inputNotVerifiedStyle()}
-                    callbackMethod={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({password})}
                     placeholder={'Ny adgangskode'}
                 />
 
@@ -151,7 +151,7 @@ class RegisterForm extends Component {
                     type={'password'}
                     name={'reaped_password'}
                     style={this.inputNotVerifiedStyle()}
-                    callbackMethod={(repeated_password) => this.setState({repeated_password})}
+                    onChangeText={(repeated_password) => this.setState({repeated_password})}
                     placeholder={'Bekræft adgangskode'}
                 />
 
@@ -175,17 +175,7 @@ class RegisterForm extends Component {
                     onPressMethod={this.register}
                 />
 
-                {/*<Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Opret bruger med Sociale Netværk</Text>
-
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center'
-                                            
-                }}>
-                    <FacebookLogo size={60} margin={20} />
-                    <TwitterLogo size={60} margin={20}/>
-                </View>
-                */}
+                
 
                 <Text style={GeneralTheme.smallText}>
                     Er du ikke medlem af foreningen endnu?
@@ -197,13 +187,6 @@ class RegisterForm extends Component {
                 >
                     Meld dig ind her
                 </Text>
-
-                <ThemeButton
-                    marginTop={40}
-                    marginBottom={15}
-                    text={'Tilbage til log ind'}
-                    onPressMethod={this.switchToLoginScreen}
-                />
 
             </View>
         )
