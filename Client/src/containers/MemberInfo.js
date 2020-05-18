@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, ScrollView, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, ScrollView, SafeAreaView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import * as SecureStore from 'expo-secure-store';
 import ThemeButton from '../components/elements/theme-elements/ThemeButton'
@@ -8,135 +8,146 @@ import SelectInput from 'react-native-select-input-ios';
 import GeneralTheme from '../styles/GeneralTheme'
 import userServices from '../../Services/userServices'
 import Loader from '../components/elements/theme-elements/Loader'
+import {switch_to_member_info_screen} from '../actions'
+
 
 export class MemberInfo extends Component {
     constructor(props){
         super(props)
         this.state = {
-            isLoading:true,
-            firstName: "",
-            lastName: "",
-            email: "",
-            address: "",
-            city: "",
-            zip: "",
-            phone_number: "",
-            gender: "",
-            password: "",
-            sms: "",
-            emails: "",
-            
-        }
+            Firstname: "",
+            Lastname: "",
+            Email: "",
+            Address: "",
+            City: "",
+            Zip: "",
+            Mobile: "",
+            GenderCode: "",
+            ReceiveSMS: "",
+            ReceiveMails: "",
+            password:"",
+            reaped_password:"",
+            requestObject: "",
+            isLoading:true
+        } 
+        
+    }
+    fetchData = async() => {
+        let userObject = JSON.parse(await userServices.getUserWithID(await SecureStore.getItemAsync('token')));
+        this.setState({
+            requestObject: userObject.resultdata.member,
+            isLoading:false})
     }
 componentDidMount = async() =>{
-    let userObject = JSON.parse(await userServices.getUserWithID(await SecureStore.getItemAsync('token')));
-    console.log(userObject)
-    this.setState({
-        firstName: userObject.resultdata.member.Firstname,
-        lastName: userObject.resultdata.member.Lastname,
-        email: userObject.resultdata.member.Email,
-        address: userObject.resultdata.member.Address,
-        city: userObject.resultdata.member.City,
-        zip: userObject.resultdata.member.Zip,
-        phone_number: userObject.resultdata.member.Phone_number,
-        gender: userObject.resultdata.member.gender,
-        password: "",
-        sms: userObject.resultdata.member.SMS,
-        emails: userObject.resultdata.member.Emails,
-        isLoading:false})
+    this.fetchData();
+    
+        
 }
 
 onSubmit = async() =>{
-    alert('Hello')
-}
+    var data = {};
+    for (const [key, value] of Object.entries(this.state)) {
+        if(value != "" && (key != "requestObject" && key != "isLoading"))
+        {
+            if(key === 'password' && (this.state.password != this.state.reaped_password)){
+                alert('Adgangskoden skal være ens!')
+                this.setState({password:"", reaped_password:""})
+                return
+            } else {
+                console.log(`${key} ${value}`);
+                data[key] = value
+                delete data.reaped_password
+            }
+        }
+      }
+      data.token = await SecureStore.getItemAsync('token');
+      console.log("data", data)
 
+      const edit = await userServices.updateUser(data);
+      this.refresh();
+      console.log("edir", edit)
+}
+refresh = () => {
+    this.props.dispatch(switch_to_member_info_screen())
+}
     render() {
-        //console.log('User: ', this.state.user.firstName)
+        
         const genderOptions = [{value:-1, label:'Køn'},{ value: 0, label: 'Ikke angivet' }, {value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
-        const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
-        const EmailsYNOptions = [{value:-1, label: 'Modtage emails'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
+        const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:true, label: 'Ja tak'}, {value:false, label:'Nej tak'}]
+        const EmailsYNOptions = [{value:-1, label: 'Modtage emails'},{value:true, label: 'Ja tak'}, {value:false, label:'Nej tak'}]
         return (
         <SafeAreaView style={[GeneralTheme.container,{width:'100%', height:'100%'}]}>
             <ScrollView contentContainerStyle={{width: this.props.width}}>
                 <Loader isLoading={this.state.isLoading} />
                 <Text style={GeneralTheme.smallText}>Indtast oplysninger</Text>
                 <ThemeTextInput
-                    name='firstName'
-                    placeholder={(this.state.firstName)}
+                    name='Firstname'
+                    placeholder={(this.state.requestObject.Firstname)}
                     style={styles.textInput}
-                    onChangeText={(firstName) => this.setState({firstName})}
-                    value={this.state.firstName}
+                    onChangeText={(Firstname) => this.setState({Firstname})}
+                    value={this.state.Firstname}
                     autoCompleteType='username'
                 />
                 <ThemeTextInput
-                    name='lastName'
-                    value={this.state.lastName}
-                    placeholder='Efternavn'
+                    name='Lastname'
+                    value={(this.state.Lastname)}
+                    placeholder={(this.state.requestObject.Lastname)}
                     style={styles.textInput}
-                    onChangeText={(lastName) => this.setState({lastName})}
+                    onChangeText={(Lastname) => this.setState({Lastname})}
                     autoCompleteType='username'
                 />
                 <ThemeTextInput
-                    name='email'
-                    value={this.state.email}
-                    placeholder='Email'
+                    name='Address'
+                    value={this.state.Address}
+                    placeholder={(this.state.requestObject.Address)}
                     style={styles.textInput}
-                    keyboardType='email-address'
-                    onChangeText={(email) => this.setState({email})}
-                    autoCompleteType='email'
+                    onChangeText={(Address) => {this.setState({Address})}}
+                    autoCompleteType='street-Address'
                 />
                 <ThemeTextInput
-                    name='address'
-                    value={this.state.address}
-                    placeholder='Adresse'
-                    style={styles.textInput}
-                    onChangeText={(address) => {this.setState({address})}}
-                    autoCompleteType='street-address'
-                />
-                <ThemeTextInput
-                    name='zip'
-                    value={this.state.zip}
-                    placeholder='Post nummer'
+                    name='Zip'
+                    value={this.state.Zip}
+                    placeholder={(this.state.requestObject.Zip)}
                     style={styles.textInput}
                     keyboardType='numeric'
-                    onChangeText={(zip) => this.setState({zip})}
+                    onChangeText={(Zip) => this.setState({Zip})}
                     autoCompleteType='postal-code'
                 />
                 <ThemeTextInput
-                    name='city'
-                    value={this.state.city}
-                    placeholder='By'
+                    name='City'
+                    value={this.state.City}
+                    placeholder={(this.state.requestObject.City)}
                     style={styles.textInput}
-                    onChangeText={(city) => this.setState({city})}
+                    onChangeText={(City) => this.setState({City})}
                     autoCompleteType='off'
                 />
                 <ThemeTextInput
-                    name='phone_number'
-                    value={this.state.phone_number}
-                    placeholder='Telefon nummber'
+                    name='Mobile'
+                    value={this.state.Mobile}
+                    placeholder={(this.state.requestObject.Mobile)}
                     keyboardType='phone-pad'
                     style={styles.textInput}
-                    onChangeText={(phone_number) => this.setState({phone_number})}
+                    onChangeText={(Mobile) => this.setState({Mobile})}
                     autoCompleteType='tel'
                 />
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
-                    value={this.state.user} options={genderOptions}   
-                    onValueChange={(gender) => this.setState({gender})}
+                    value={this.state.requestObject.GenderCode} options={genderOptions}   
+                    onValueChange={(GenderCode) => this.setState({GenderCode})}
                      
                 />
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
-                    value={this.state.sms} options={SMSYNOptions}   
-                    onValueChange={(sms) => this.setState({sms})} 
+                    value={this.state.requestObject.ReceiveSMS} options={SMSYNOptions}   
+                    onValueChange={(ReceiveSMS) => this.setState({ReceiveSMS})} 
                 />
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
-                    value={this.state.emails} options={EmailsYNOptions}   
-                    onValueChange={(emails) => this.setState({emails})} 
+                    value={this.state.requestObject.ReceiveMails} options={EmailsYNOptions}   
+                    onValueChange={(ReceiveMails) => this.setState({ReceiveMails})} 
                 />
                 
                 <ThemeTextInput
@@ -183,7 +194,7 @@ const styles = StyleSheet.create({
     selectertext:{
         fontFamily: 'Avenir',
         opacity: 0.2,
-        fontSize: 12,
+        //fontSize: 12,
         
     }
 

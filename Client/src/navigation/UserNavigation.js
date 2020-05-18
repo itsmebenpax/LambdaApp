@@ -19,8 +19,9 @@ export class UserNavigation extends Component {
     render() {
         return (
             <View style={{flex:1,width: '100%', height:'100%'}}>
+                <View style={{flex:1,width: '100%', height:'90%'}}>
                 {this.switchView()}
-                
+                </View>
                 <OtherNavigator/>
             </View>  
             

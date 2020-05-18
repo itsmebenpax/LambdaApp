@@ -23,9 +23,9 @@ class ThemeTextInput extends Component {
         const style = this.props.style === undefined ? {} : this.props.style
         const secureTextEntry = this.props.type === "password" ? true : false
         const type = this.props.type === undefined ? "" : this.props.type
-    
+        const autoCapitalize = this.props.autoCapitalize === undefined ? "none" : this.props.autoCapitalize
         const margin = this.props.margin === undefined ? 0 : this.props.margin
-    
+        const value = this.props.value === "" ? "" : this.props.value
         const marginVertical = this.props.marginVertical === undefined ? 0 : this.props.marginVertical
         const marginHorizontal = this.props.marginHorizontal === undefined ? 0 : this.props.marginHorizontal
     
@@ -43,7 +43,8 @@ class ThemeTextInput extends Component {
                 secureTextEntry={secureTextEntry}
                 autoCompleteType={type}
                 onChangeText={(input) => this.props.onChangeText(input)}
-                
+                autoCapitalize={autoCapitalize}
+                value={value}
                 style={[GeneralTheme.theme, {
                     margin: margin,
                     marginVertical: marginVertical,

@@ -14,8 +14,8 @@ import {
 const HomeScreen = () => {
     console.log('Hello from homeScreen')
     return (
-        <View style={{paddingTop:50, height:'80%'}}>
-            <Text style={{color:'white', fontSize:25}}>Hello from homeScreen</Text>
+        <View style={{paddingTop:50, height:'80%', alignItems:'center'}}>
+            <Text style={{color:'white', fontSize:25}}>Hallo from Lambda</Text>
         </View>
     )
 }

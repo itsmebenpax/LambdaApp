@@ -7,6 +7,7 @@ import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput'
 import GeneralTheme from '../styles/GeneralTheme'
 import { connect } from 'react-redux';
+import {switch_to_login_screen} from '../actions'
 
 class SignupFrom extends Component {
     constructor(props) {
@@ -42,18 +43,18 @@ class SignupFrom extends Component {
                 address: this.state.address,
                 city: this.state.city,
                 zip: this.state.zip,
-                phone_number: this.state.phone_number,
+                mobil_number: this.state.phone_number,
                 birthday: this.state.birthday,
                 gender: this.state.gender,
                 password: this.state.password,
                 membertypeID: this.state.membertypeID,
                 sms: this.state.sms,
                 emails: this.state.emails,
-                eMembershipCard: 1,
             }
-            const res = await userServices.createUser(data);
+            const res = await userServices.createMember(data);
             if(res === 200)
             alert("User have been created!");
+            this.switchToLoginScreen();
         }else if(this.state.reaped_password != this.state.password)
         {
             alert('Adgangskoden skal være ens!')
@@ -62,6 +63,10 @@ class SignupFrom extends Component {
         }
         
     } 
+
+    switchToLoginScreen = () => {
+        this.props.dispatch(switch_to_login_screen())
+    }
     render() {
         const genderOptions = [{value:-1, label:'Køn'},{ value: 0, label: 'Ikke angivet' }, {value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
         const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]

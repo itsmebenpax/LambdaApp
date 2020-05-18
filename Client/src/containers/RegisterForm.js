@@ -27,25 +27,25 @@ class RegisterForm extends Component {
 
     register = async () => {
         // verify all input
-        this.verifyInput()
+        //this.verifyInput()
 
-        console.log('after verify method: ' + this.state.inputVerificationFailed)
+        //console.log('after verify method: ' + this.state.inputVerificationFailed)
         
         // make an http request to the backend with new user data
-        // if(!this.state.inputVerificationFailed) {
-        //     let data = {
-        //         membership_number: this.state.membership_number,
-        //         email: this.state.email,
-        //         password: this.state.password
-        //     }
-        //     const res = await userServices.createUser(data);
-        //     console.log("RF: ",res)
+         if(!this.state.inputVerificationFailed) {
+             let data = {
+                membership_number: this.state.membership_number,
+                email: this.state.email,
+                password: this.state.password
+           }
+            const res = await userServices.createUser(data);
+             console.log("RF: ",res)
 
-        //     if(res === 200)
-        //         alert("User have been created!");
+             if(res === 200)
+                 alert("User have been created!");
             
-        //     this.switchToLoginScreen()
-        // }
+             this.switchToLoginScreen()
+         }
     }
 
     /**
@@ -174,19 +174,6 @@ class RegisterForm extends Component {
                     text={'REGISTRER BRUGER'}
                     onPressMethod={this.register}
                 />
-
-                
-
-                <Text style={GeneralTheme.smallText}>
-                    Er du ikke medlem af foreningen endnu?
-                </Text>
-
-                <Text
-                    style={[GeneralTheme.smallText, {textDecorationLine: 'underline'}]}
-                    onPress={this.switchToSignUpScreen}
-                >
-                    Meld dig ind her
-                </Text>
 
             </View>
         )
