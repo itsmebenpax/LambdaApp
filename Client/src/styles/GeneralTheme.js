@@ -1,29 +1,29 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 const GeneralTheme = StyleSheet.create({
     text: {
         textAlign: 'center',
         color: 'white',
         fontSize: 15,
-        fontFamily: 'Avenir'
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal'
     },
 
     smallText: {
         color: 'white',
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         opacity: 0.9,
         fontSize: 16
     },
     cardText: {
         color: 'white',
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         opacity: 0.9,
         fontSize: 20,
         marginBottom:10
     },
     Headertext: {
         color: 'white',
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         opacity: 0.9,
         fontSize: 30,
         marginBottom:20
@@ -37,7 +37,7 @@ const GeneralTheme = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         fontSize: 15,
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 2, height: 2}
@@ -56,7 +56,7 @@ const GeneralTheme = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         fontSize: 3,
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 2, height: 2},
@@ -71,7 +71,7 @@ const GeneralTheme = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         fontSize: 3,
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 2, height: 2},
@@ -80,7 +80,8 @@ const GeneralTheme = StyleSheet.create({
     },
     overlay:{
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor: 'rgba(0,0,0,0.2)'
 
     },
     overlay_kid:{

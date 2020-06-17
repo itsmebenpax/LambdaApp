@@ -39,7 +39,7 @@ export default{
             console.log('After call',user)
             return {token: user.data.token, status:user.status} 
         } catch (error) {
-            
+            console.log(data);
             console.log("Shits broke")
         }
 
@@ -71,8 +71,9 @@ export default{
         let auth = {'authorizationToken':data.token}
         console.log("userservices: ",data)
         console.log(auth)
+        console.log(Expo.Constants.manifest.extra.endpoint+'editUser')
         try{
-            const res = await axios.post(Expo.Constants.manifest.extra.endpoint+'editUser', data,{headers:{'authorizationToken':auth}});
+            const res = await axios.post(Expo.Constants.manifest.extra.endpoint+'editUser', data,{headers:{'authorizationToken':data.token}});
             console.log("editUser work", res)
             return res.status
         } catch (error) {

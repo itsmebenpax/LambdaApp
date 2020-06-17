@@ -86,7 +86,7 @@ refresh = () => {
                     style={styles.textInput}
                     onChangeText={(Firstname) => this.setState({Firstname})}
                     value={this.state.Firstname}
-                    autoCompleteType='username'
+                    autoCompleteType='off'
                 />
                 <ThemeTextInput
                     name='Lastname'
@@ -94,7 +94,7 @@ refresh = () => {
                     placeholder={(this.state.requestObject.Lastname)}
                     style={styles.textInput}
                     onChangeText={(Lastname) => this.setState({Lastname})}
-                    autoCompleteType='username'
+                    autoCompleteType='off'
                 />
                 <ThemeTextInput
                     name='Address'
@@ -102,7 +102,7 @@ refresh = () => {
                     placeholder={(this.state.requestObject.Address)}
                     style={styles.textInput}
                     onChangeText={(Address) => {this.setState({Address})}}
-                    autoCompleteType='street-Address'
+                    autoCompleteType='street-address'
                 />
                 <ThemeTextInput
                     name='Zip'
@@ -130,6 +130,8 @@ refresh = () => {
                     onChangeText={(Mobile) => this.setState({Mobile})}
                     autoCompleteType='tel'
                 />
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Køn:</Text>
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
@@ -137,19 +139,24 @@ refresh = () => {
                     onValueChange={(GenderCode) => this.setState({GenderCode})}
                      
                 />
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Vil du modtage sms'er?</Text>
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
                     value={this.state.requestObject.ReceiveSMS} options={SMSYNOptions}   
                     onValueChange={(ReceiveSMS) => this.setState({ReceiveSMS})} 
                 />
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Vil du modtage emails?</Text>
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
                     value={this.state.requestObject.ReceiveMails} options={EmailsYNOptions}   
                     onValueChange={(ReceiveMails) => this.setState({ReceiveMails})} 
                 />
-                
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Opret ny adgangskode:</Text>
                 <ThemeTextInput
                     name='password'
                     type='password'
@@ -164,7 +171,7 @@ refresh = () => {
                     name='reaped_password'
                     type='password'
                     value={this.state.reaped_password}
-                    placeholder='Genag adgangskode'
+                    placeholder='Bekræft adgangskode'
                     secureTextEntry={true}
                     style={styles.textInput}
                     onChangeText={(reaped_password) => this.setState({reaped_password})}
@@ -192,7 +199,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
     },
     selectertext:{
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         opacity: 0.2,
         //fontSize: 12,
         

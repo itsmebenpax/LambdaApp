@@ -17,7 +17,7 @@ class RegisterForm extends Component {
 
         this.state = {
             membership_number: '',
-            email:' ',
+            email:'',
             password: '',
             repeated_password: '',
             inputVerificationFailed: false,

@@ -22,7 +22,7 @@ class ThemeTextInput extends Component {
         const placeholder = this.props.placeholder === undefined ? "" : this.props.placeholder
         const style = this.props.style === undefined ? {} : this.props.style
         const secureTextEntry = this.props.type === "password" ? true : false
-        const type = this.props.type === undefined ? "" : this.props.type
+        const type = this.props.type === undefined ? "off" : this.props.type
         const autoCapitalize = this.props.autoCapitalize === undefined ? "none" : this.props.autoCapitalize
         const margin = this.props.margin === undefined ? 0 : this.props.margin
         const value = this.props.value === "" ? "" : this.props.value

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native'
 import SelectInput from 'react-native-select-input-ios';
 
+import { Platform } from 'react-native'
+
 import userServices from '../../Services/userServices'
 import ThemeButton from '../components/elements/theme-elements/ThemeButton'
 import ThemeTextInput from '../components/elements/theme-elements/ThemeTextInput'
@@ -68,9 +70,9 @@ class SignupFrom extends Component {
         this.props.dispatch(switch_to_login_screen())
     }
     render() {
-        const genderOptions = [{value:-1, label:'Køn'},{ value: 0, label: 'Ikke angivet' }, {value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
-        const SMSYNOptions = [{value:-1, label: 'Modtage smser'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
-        const EmailsYNOptions = [{value:-1, label: 'Modtage emails'},{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
+        const genderOptions = [{value: 1, label:'Mand'}, {value:2, label:'Kvinde'}, {value:3, label:'Ikke defineret'}]
+        const SMSYNOptions = [{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
+        const EmailsYNOptions = [{value:1, label: 'Ja tak'}, {value:0, label:'Nej tak'}]
         return (
         <SafeAreaView style={GeneralTheme.container}>
             <ScrollView contentContainerStyle={{width: this.props.width}}>
@@ -81,7 +83,7 @@ class SignupFrom extends Component {
                     style={styles.textInput}
                     onChangeText={(firstName) => this.setState({firstName})}
                     value={this.state.firstName}
-                    autoCompleteType='username'
+                    autoCompleteType='off'
                 />
                 <ThemeTextInput
                     name='lastName'
@@ -89,7 +91,7 @@ class SignupFrom extends Component {
                     placeholder='Efternavn'
                     style={styles.textInput}
                     onChangeText={(lastName) => this.setState({lastName})}
-                    autoCompleteType='username'
+                    autoCompleteType='off'
                 />
                 <ThemeTextInput
                     name='email'
@@ -111,7 +113,7 @@ class SignupFrom extends Component {
                 <ThemeTextInput
                     name='zip'
                     value={this.state.zip}
-                    placeholder='Post nummer'
+                    placeholder='Postnummer'
                     style={styles.textInput}
                     keyboardType='numeric'
                     onChangeText={(zip) => this.setState({zip})}
@@ -128,7 +130,7 @@ class SignupFrom extends Component {
                 <ThemeTextInput
                     name='phone_number'
                     value={this.state.phone_number}
-                    placeholder='Telefon nummber'
+                    placeholder='Telefonnummer'
                     keyboardType='phone-pad'
                     style={styles.textInput}
                     onChangeText={(phone_number) => this.setState({phone_number})}
@@ -142,6 +144,9 @@ class SignupFrom extends Component {
                     onChangeText={(birthday) => this.setState({birthday})}
                     autoCompleteType='off'
                 />
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Køn:</Text>
+
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
@@ -149,12 +154,18 @@ class SignupFrom extends Component {
                     onValueChange={(gender) => this.setState({gender})}
                      
                 />
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Vil du modtage sms'er?</Text>
+
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
                     value={this.state.sms} options={SMSYNOptions}   
                     onValueChange={(sms) => this.setState({sms})} 
                 />
+
+                <Text style={[GeneralTheme.smallText, {marginTop: 20}]}>Vil du modtage emails?</Text>
+                
                 <SelectInput
                     style={[GeneralTheme.theme, styles.selecter, styles.textInput]}
                     labelStyle={[styles.selectertext]}
@@ -176,7 +187,7 @@ class SignupFrom extends Component {
                     name='reaped_password'
                     type='password'
                     value={this.state.reaped_password}
-                    placeholder='Genag adgangskode'
+                    placeholder='Bekræft adgangskode'
                     secureTextEntry={true}
                     style={styles.textInput}
                     onChangeText={(reaped_password) => this.setState({reaped_password})}
@@ -203,7 +214,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
     },
     selectertext:{
-        fontFamily: 'Avenir',
+        fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'normal',
         opacity: 0.2,
         fontSize: 12,
         
