@@ -17,7 +17,7 @@
     "@react-navigation/drawer": "^5.7.2",
     "@react-navigation/native": "^5.3.0",
     "@react-navigation/stack": "^5.3.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.2.0",
     "expo": "^37.0.9",
